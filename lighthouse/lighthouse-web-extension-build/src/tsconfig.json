@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "moduleResolution": "node",
+        "target": "es5",
+        "skipLibCheck": true,
+        "types": [
+            "vss-web-extension-sdk",
+            "jquery"
+        ]
+    },
+    "files": [
+        "lighthouse.ts"
+    ]
+}
