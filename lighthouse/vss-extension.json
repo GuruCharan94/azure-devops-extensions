@@ -13,7 +13,7 @@
         "vso.build",
         "vso.release"
     ],
-    "description": "**Unofficial** Google Lighthouse Extension for Azure Devops.",
+    "description": "Google Lighthouse Extension for Azure Devops.",
     "categories": [
         "Azure Pipelines"
     ],
@@ -29,6 +29,18 @@
             "addressable": true
         }    
     ],
+    "tags": [
+        "lighthouse",
+        "web",
+        "performance",
+        "accessibility",
+        "a11y",
+        "seo"
+    ]
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/GuruCharan94/azure-devops-extensions"
+    },
     "contributions": [
         {
             "id": "custom-build-release-task",
