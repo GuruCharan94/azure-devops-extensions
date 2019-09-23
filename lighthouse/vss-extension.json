@@ -72,10 +72,10 @@
     ],
     "content": {
         "details": {
-            "path": "README.md"
+            "path": "../README.md"
         },
         "license": {
-            "path": "LICENSE.md"
+            "path": "../LICENSE.md"
         }
     }
 }
