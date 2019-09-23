@@ -36,7 +36,7 @@
         "accessibility",
         "a11y",
         "seo"
-    ]
+    ],
     "repository": {
         "type": "git",
         "uri": "https://github.com/GuruCharan94/azure-devops-extensions"
