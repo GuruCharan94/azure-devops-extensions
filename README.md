@@ -1,2 +1,1 @@
-# Google Lighthouse Extension for Azure Devops
-
+# Azure Devops Extensions
