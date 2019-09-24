@@ -1,6 +1,7 @@
 import tasklib = require('azure-pipelines-task-lib/task');
 import toolrunner = require('azure-pipelines-task-lib/toolrunner');
 import * as path from 'path';
+import url=require('url');
 
 async function run() {
     let resultsFolder: string = "lighthouse-reports"
@@ -26,7 +27,8 @@ async function run() {
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`lighthouse-report-${targetURL}.html`,report);
+                        
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`lighthouse-report-${url.parse(targetURL).hostname}.html`,report);
 
                     });
                 },

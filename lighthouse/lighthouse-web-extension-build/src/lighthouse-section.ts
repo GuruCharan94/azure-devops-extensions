@@ -48,11 +48,13 @@ export class LightHouseBuildResultsTab extends Controls.BaseControl {
                                 $.each(taskAttachments, (index, taskAttachment) => {                                    
                                     if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
                                                 
-                                                var link = $("<a>");
-                                                link.attr("href", taskAttachment._links.self.href);
-                                                link.attr("title", "Download LightHouse Report");
-                                                link.text("Download LightHouse Report");
-                                                this._element.append(link);
+                                                var list = $("<li>");
+                                                list.append(
+                                                    $("<a>").attr("href", taskAttachment._links.self.href)
+                                                            .attr("title", "Download LightHouse Report")
+                                                            .text("Download LightHouse Report")                                            
+                                                )
+                                                this._element.append(list);
                                        
                                     }
                                 });
@@ -85,7 +87,7 @@ export class LightHouseReleaseResultsTab extends Controls.BaseControl {
 
         var releaseConfig: TFS_Release_Extension_Contracts.IReleaseViewExtensionConfig = VSS.getConfiguration();
         if (releaseConfig) {
-
+            
             releaseConfig.onReleaseChanged((release: TFS_Release_Contracts.Release) => {
                 let releaseClient: RM_Client.ReleaseHttpClient5 = <RM_Client.ReleaseHttpClient5>RM_Client.getClient();
 
@@ -114,14 +116,16 @@ export class LightHouseReleaseResultsTab extends Controls.BaseControl {
                                             
                                             if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
                                 
-                                                var link = $("<a>");
-                                                link.attr("href", taskAttachment._links.self.href);
-                                                link.attr("title", "Download LightHouse Report");
-                                                link.text("Download LightHouse Report");
-                                                this._element.append(link);
-                                                VSS.resize();
+                                                var list = $("<li>");
+                                                list.append(
+                                                    $("<a>").attr("href", taskAttachment._links.self.href)
+                                                            .attr("title", "Download LightHouse Report")
+                                                            .text("Download LightHouse Report")                                            
+                                                )
+                                                this._element.append(list);
                                             }
                                         });
+                                        VSS.resize();
                                     }
                                 },
                                 function () {
