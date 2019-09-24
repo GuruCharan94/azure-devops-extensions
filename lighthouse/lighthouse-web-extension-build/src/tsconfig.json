@@ -11,6 +11,6 @@
     },
     "files": [
         "lighthouse-section.ts",
-        "lighthouse-taab.ts"
+        "lighthouse-tab.ts"
     ]
 }
