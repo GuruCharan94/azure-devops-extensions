@@ -47,29 +47,17 @@ export class LightHouseBuildResultsTab extends Controls.BaseControl {
                             else {
                                 $.each(taskAttachments, (index, taskAttachment) => {                                    
                                     if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
-                                        taskClient.getAttachmentContent(vsoContext.project.id, "build",
-                                            build.orchestrationPlan.planId, taskAttachment.timelineId,
-                                            taskAttachment.recordId, "gurucharan94.lighthouse-html-artifact", taskAttachment.name
-                                        )
-                                            .then((attachmentContent) => {
-                                                var text = new TextDecoder('utf-8').decode(new Uint8Array(attachmentContent));
-                                                var el = $('<iframe>', {
-                                                    srcdoc: text,
-                                                    id: 'lighthouse-result',
-                                                    frameborder: '0',
-                                                    width: '100%',
-                                                    height: '100%',
-                                                    scrolling: 'yes',
-                                                    marginheight: '0',
-                                                    marginwidth: '0'
-                                                });
-                                                console.log(taskAttachment);
-
-                                                this._element.append(el);
-                                                VSS.resize();
-                                            })
+                                                
+                                                var link = $("<a>");
+                                                link.attr("href", taskAttachment._links.self.href);
+                                                link.attr("title", "Download LightHouse Report");
+                                                link.text("Download LightHouse Report");
+                                                this._element.append(link);
+                                       
                                     }
                                 });
+                                VSS.resize();
+
                             }
                         },
                             function () {
@@ -126,32 +114,12 @@ export class LightHouseReleaseResultsTab extends Controls.BaseControl {
                                             
                                             if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
                                 
-                                                releaseClient.getTaskAttachmentContent(vsoContext.project.id, release.id,
-                                                                                                environment.id, deployAttempt.id,
-                                                                                                taskAttachment.timelineId, taskAttachment.recordId, 
-                                                                                                "gurucharan94.lighthouse-html-artifact", 
-                                                                                                taskAttachment.name)
-                                                            .then((attachmentContent) => {
-
-                                
-
-                                                                var text = new TextDecoder('utf-8').decode(new Uint8Array(attachmentContent));
-                                                                var el = $('<iframe>', {
-                                                                    srcdoc: text,
-                                                                    id: 'lighthouse-result',
-                                                                    frameborder: '0',
-                                                                    width: '100%',
-                                                                    height: '100%',
-                                                                    scrolling: 'yes',
-                                                                    marginheight: '0',
-                                                                    marginwidth: '0'
-                                                                });
-
-                                                                console.log(taskAttachment);
-
-                                                                that._element.append(el);
-                                                                VSS.resize();
-                                                            })
+                                                var link = $("<a>");
+                                                link.attr("href", taskAttachment._links.self.href);
+                                                link.attr("title", "Download LightHouse Report");
+                                                link.text("Download LightHouse Report");
+                                                this._element.append(link);
+                                                VSS.resize();
                                             }
                                         });
                                     }

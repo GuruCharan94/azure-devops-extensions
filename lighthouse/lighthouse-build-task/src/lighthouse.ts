@@ -3,6 +3,7 @@ import toolrunner = require('azure-pipelines-task-lib/toolrunner');
 import * as path from 'path';
 
 async function run() {
+    let resultsFolder: string = "lighthouse-reports"
     try {
 
         // Read Inputs to Task
@@ -12,8 +13,9 @@ async function run() {
         let parameters: string = tasklib.getInput('parameters', false) || "";
 
         const lighthousePath = path.join(__dirname, 'node_modules','.bin','lighthouse');
-        tasklib.mkdirP("lighthouse-reports");
-        tasklib.cd("lighthouse-reports");
+        
+        tasklib.mkdirP(resultsFolder);
+        tasklib.cd(resultsFolder);
         
         const lighthouse  = tasklib.tool(lighthousePath);
         lighthouse.arg(targetURL)                
@@ -24,15 +26,21 @@ async function run() {
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`gurucharan94-lighthouse-report`,report);
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`lighthouse-report-${targetURL}.html`,report);
 
                     });
-                })
+                },
+                (error) => {
+                    tasklib.setResult(tasklib.TaskResult.Failed, error);            
+                }
+                )
     }
-
     catch (err) {
         tasklib.setResult(tasklib.TaskResult.Failed, err.message);
+    }
+
+    finally {
+        tasklib.rmRF(resultsFolder);
     }
 }
 
