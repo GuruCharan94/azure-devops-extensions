@@ -45,8 +45,7 @@ export class LightHouseBuildResultsTab extends Controls.BaseControl {
                                 this._element.append(element);
                             }
                             else {
-                                $.each(taskAttachments, (index, taskAttachment) => {
-
+                                $.each(taskAttachments, (index, taskAttachment) => {                                    
                                     if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
                                         taskClient.getAttachmentContent(vsoContext.project.id, "build",
                                             build.orchestrationPlan.planId, taskAttachment.timelineId,
@@ -64,6 +63,8 @@ export class LightHouseBuildResultsTab extends Controls.BaseControl {
                                                     marginheight: '0',
                                                     marginwidth: '0'
                                                 });
+                                                console.log(taskAttachment);
+
                                                 this._element.append(el);
                                                 VSS.resize();
                                             })
@@ -145,6 +146,9 @@ export class LightHouseReleaseResultsTab extends Controls.BaseControl {
                                                                     marginheight: '0',
                                                                     marginwidth: '0'
                                                                 });
+
+                                                                console.log(taskAttachment);
+
                                                                 that._element.append(el);
                                                                 VSS.resize();
                                                             })

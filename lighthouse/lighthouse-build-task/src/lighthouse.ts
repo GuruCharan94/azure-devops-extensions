@@ -21,11 +21,14 @@ async function run() {
                 .exec()
                 .then(() => {
                     // Decorate Build / Release Summary with report                    
-                    let result = tasklib.findMatch(tasklib.cwd(),"*.html")[0];                    
-                    let id: string = tasklib.getVariable("BUILD.BUILDID") || tasklib.getVariable("RELEASE.RELEASEID")
-                    tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`gurucharan94-lighthouse-report-${id}`,result);
-                })
+                    let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
+                    htmlReports.forEach(report => {
+
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`gurucharan94-lighthouse-report`,report);
+
+                    });
+                })
     }
 
     catch (err) {
