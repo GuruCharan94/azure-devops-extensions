@@ -10,7 +10,6 @@
         ]
     },
     "files": [
-        "lighthouse-section.ts",
         "lighthouse-tab.ts"
     ]
 }
