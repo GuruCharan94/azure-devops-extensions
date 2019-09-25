@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <div class="tab" style="padding: 0 5px; border-bottom: 1px solid rgba(0,120,212,1)">        
+    <div class="tab" style="padding: 0 5px;">
     </div>
       
     <div class="embeds" style="height: 100%; width: 100%; padding: 5px;">
@@ -49,6 +49,14 @@ function showReport(element, id) {
       tablinks[i].className = tablinks[i].className.replace("active", "");
     }
     element.className += "active";
+  
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  document.getElementById(id).style.display = "block";
+
+
 }
 </script>
 </html>
