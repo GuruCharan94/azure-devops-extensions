@@ -68,7 +68,7 @@ export class LightHouseBuildResultsSection extends Controls.BaseControl {
                                                 var button = `<button class="tablinks" onclick="showReport(${taskAttachment.name})">${taskAttachment.name}</button>`
                                                 
                                                 this._element.children(".tab").append(button);
-                                                this._element.append(report);
+                                                this._element.children(".embeds").append(report);
                                                 VSS.resize();
                                             })
                                     }
