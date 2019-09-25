@@ -18,14 +18,22 @@
     <style>
             html {
               height: 100%;
+              
             }
             body {
               height: 100%;
             }
+            .tab button.active {
+                border: 1px solid rgba(0,120,212,1)
+            }
+            .tablinks {
+                margin: 0 5px 0 0;
+                border: 1px solid rgba(0,120,212,1)
+            }
     </style>
 </head>
 <body>
-    <div class="tab">
+    <div class="tab" style="padding: 0 5px; border-bottom: 1px solid rgba(0,120,212,1)">        
     </div>
       
     <div class="embeds" style="height: 100%; width: 100%;">
@@ -35,6 +43,7 @@
 
 function showReport(id) {
   var i, tabcontent, tablinks;
+  //$(this).addClass("active")
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
@@ -44,8 +53,7 @@ function showReport(id) {
   
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace("active", "");
-  }
-  
+  }  
   document.getElementById(id).style.display = "block";
 }
 </script>

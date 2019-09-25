@@ -23,11 +23,10 @@ async function run() {
                 .line(`--output json --output html ${parameters} ${configFilePath}`)                
                 .exec()
                 .then(() => {
-                    // Decorate Build / Release Summary with report                    
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact",`lighthouse-report-${url.parse(targetURL).hostname}.html`,report);
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", url.parse(targetURL).hostname! ,report);
 
                     });
                 },
