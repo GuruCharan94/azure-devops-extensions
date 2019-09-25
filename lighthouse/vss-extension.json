@@ -67,26 +67,12 @@
             }
         },
         {
-            "id": "build-summary-section",
-            "type": "ms.vss-build-web.build-results-section",
-            "description": "To contribute to the summary view on build results/details view",
-            "targets": [
-                "ms.vss-build-web.build-results-summary-tab"
-            ],
-            "properties": {
-                "name": "Light House Results",
-                "uri": "lighthouse-web-extension-build/src/lighthouse-section.html",
-                "supportsTasks": ["81cc77f6-237b-4962-a25e-80f820a88462"]
-
-            }
-        },
-        {
             "id": "release-management-tab",
             "type": "ms.vss-releaseManagement-web.release-summary-tab",
             "targets": [ "ms.vss-releaseManagement-web.release-details-view" ],
             "properties": {
               "name": "Light House Results",
-              "uri": "lighthouse-web-extension-build/src/lighthouse.html",
+              "uri": "lighthouse-web-extension-build/src/lighthouse-tab.html",
               "supportsTasks": ["81cc77f6-237b-4962-a25e-80f820a88462"]
           }
           }

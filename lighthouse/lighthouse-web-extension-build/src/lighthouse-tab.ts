@@ -53,19 +53,27 @@ export class LightHouseBuildResultsSection extends Controls.BaseControl {
                                         )
                                             .then((attachmentContent) => {
                                                 var text = new TextDecoder('utf-8').decode(new Uint8Array(attachmentContent));
-                                                var el = $('<iframe>', {
+                                                var report = $('<iframe>', {
                                                     srcdoc: text,
-                                                    id: 'lighthouse-result',
+                                                    id: taskAttachment.name,
                                                     frameborder: '0',
                                                     width: '100%',
                                                     height: '100%',
                                                     scrolling: 'yes',
                                                     marginheight: '0',
-                                                    marginwidth: '0'
+                                                    marginwidth: '0',
+                                                    class: 'tabcontent'
                                                 });
-                                                console.log(taskAttachment);
 
-                                                this._element.append(el);
+                                                var button = $("button", {
+                                                    class : 'tablinks',
+                                                });
+
+                                                button.text(taskAttachment.name)
+                                                      .click("showReport");  
+
+                                                this._element.children(".tab").append(button);
+                                                this._element.append(report);
                                                 VSS.resize();
                                             })
                                     }
