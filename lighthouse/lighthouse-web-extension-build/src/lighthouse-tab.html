@@ -36,21 +36,19 @@
     <div class="tab" style="padding: 0 5px; border-bottom: 1px solid rgba(0,120,212,1)">        
     </div>
       
-    <div class="embeds" style="height: 100%; width: 100%;">
+    <div class="embeds" style="height: 100%; width: 100%; padding: 5px;">
     </div>
 </body>
 <script>
 
 function showReport(element, id) {
   var i, tablinks;
-  //$(this).addClass("active")
-  
-  tablinks = document.getElementsByClassName("tablinks");
-  
+
+  tablinks = document.getElementsByClassName("tablinks");  
   for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace("active", "");
-  }
-  element.className.add("active");
+      tablinks[i].className = tablinks[i].className.replace("active", "");
+    }
+    element.className += "active";
 }
 </script>
 </html>

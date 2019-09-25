@@ -65,7 +65,7 @@ export class LightHouseBuildResultsSection extends Controls.BaseControl {
                                                     class: 'tabcontent'
                                                 });
 
-                                                var button = `<button class="tablinks" onclick="showReport(this,'${taskAttachment.name}')">${taskAttachment.name}</button>`
+                                                var button = `<button class="tablinks active" onclick="showReport(this,'${taskAttachment.name}')">${taskAttachment.name}</button>`
                                                 
                                                 this._element.children(".tab").append(button);
                                                 this._element.children(".embeds").append(report);
