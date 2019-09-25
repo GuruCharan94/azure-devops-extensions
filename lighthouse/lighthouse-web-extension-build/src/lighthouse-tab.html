@@ -18,17 +18,17 @@
     <style>
             html {
               height: 100%;
-              
+              padding: 0 24px;
             }
             body {
               height: 100%;
             }
-            .tab button.active {
+            .tablinks.active {
                 border: 1px solid rgba(0,120,212,1)
             }
             .tablinks {
                 margin: 0 5px 0 0;
-                border: 1px solid rgba(0,120,212,1)
+                
             }
     </style>
 </head>
@@ -41,20 +41,16 @@
 </body>
 <script>
 
-function showReport(id) {
-  var i, tabcontent, tablinks;
+function showReport(element, id) {
+  var i, tablinks;
   //$(this).addClass("active")
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
   
   tablinks = document.getElementsByClassName("tablinks");
   
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace("active", "");
-  }  
-  document.getElementById(id).style.display = "block";
+  }
+  element.className.add("active");
 }
 </script>
 </html>
