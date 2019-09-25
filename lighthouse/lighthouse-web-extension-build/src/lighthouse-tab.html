@@ -26,26 +26,29 @@
 </head>
 <body>
     <div class="tab">
-        <button class="tablinks" onclick="showReport(event, 'id1')" id="defaultOpen">London</button>
-        <button class="tablinks" onclick="showReport(event, 'id2')">Paris</button>
+        <button class="tablinks" onclick="showReport('id1')" id="defaultOpen">London</button>
+        <button class="tablinks" onclick="showReport('id2')">Paris</button>
       </div>
       
       <iframe id="id1" class="tabcontent">             
       <iframe id="id2" class="tabcontent">
 </body>
 <script>
-function showReport(evt, id) {
+
+function showReport(id) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
+  
   tablinks = document.getElementsByClassName("tablinks");
+  
   for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
+    tablinks[i].className = tablinks[i].className.replace("active", "");
   }
+  
   document.getElementById(id).style.display = "block";
-  evt.currentTarget.className += " active";
 }
 
 // Get the element with id="defaultOpen" and click on it
