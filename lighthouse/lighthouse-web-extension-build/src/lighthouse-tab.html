@@ -27,13 +27,13 @@
                 border: 1px solid rgba(0,120,212,1)
             }
             .tablinks {
-                margin: 0 5px 0 0;
+                margin: 5px;
                 
             }
     </style>
 </head>
 <body>
-    <div class="tab" style="padding: 0 5px;">
+    <div class="tab" style="padding:5px;">
     </div>
       
     <div class="embeds" style="height: 100%; width: 100%; padding: 5px;">
@@ -46,7 +46,7 @@ function showReport(element, id) {
 
   tablinks = document.getElementsByClassName("tablinks");  
   for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace("active", "");
+      tablinks[i].className = tablinks[i].style["border"] = "none";
     }
     element.style["border"] = "1px solid rgba(0,120,212,1)";
   
