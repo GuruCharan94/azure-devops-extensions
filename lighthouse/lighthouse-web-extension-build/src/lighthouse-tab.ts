@@ -66,10 +66,13 @@ export class LightHouseBuildResultsSection extends Controls.BaseControl {
                                                 });
 
                                                 var button = `<button class="tablinks active" onclick="showReport(this,'${taskAttachment.name}')">${taskAttachment.name}</button>`
+                                                                
+                                                that._element.children(".tab").append(button);
+                                                that._element.children(".embeds").append(report);
                                                 
-                                                this._element.children(".tab").append(button);
-                                                this._element.children(".embeds").append(report);
-                                                VSS.resize();
+                                                if (index == 0 ) {
+                                                    that._element.children("p").remove();
+                                                }
                                             })
                                     }
                                 });
@@ -152,8 +155,13 @@ export class LightHouseReleaseResultsSection extends Controls.BaseControl {
                 
                                                                 var button = `<button class="tablinks active" onclick="showReport(this,'${taskAttachment.name}')">${taskAttachment.name}</button>`
                                                                 
-                                                                this._element.children(".tab").append(button);
-                                                                this._element.children(".embeds").append(report);
+                                                                that._element.children(".tab").append(button);
+                                                                that._element.children(".embeds").append(report);
+                                                                
+                                                                if (index == 0 ) {
+                                                                    that._element.children("p").remove();
+                                                                }
+                                                                
                                                                 VSS.resize();
                                                             })
                                             }
