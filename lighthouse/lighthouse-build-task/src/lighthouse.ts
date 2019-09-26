@@ -38,7 +38,7 @@ async function run() {
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", `${url.parse(targetURL).hostname!}-${url.parse(targetURL).path!}` ,report);
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", url.parse(targetURL).hostname! ,report);
 
                     });
                 },
