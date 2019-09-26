@@ -2,6 +2,9 @@ import tasklib = require('azure-pipelines-task-lib/task');
 import toolrunner = require('azure-pipelines-task-lib/toolrunner');
 import * as path from 'path';
 import url=require('url');
+import { chmodSync } from "fs";
+import * as os from "os";
+
 
 async function run() {
     let resultsFolder: string = "lighthouse-reports"
@@ -13,8 +16,17 @@ async function run() {
                                         `--config-path ${tasklib.getPathInput('configFilePath', false, true)}` : "" ;
         let parameters: string = tasklib.getInput('parameters', false) || "";
 
-        const lighthousePath = path.join(__dirname, 'node_modules','.bin','lighthouse');
         
+        let isWindows: Boolean = os.platform() === "win32";
+
+        let lighthousePath: string = path.join(__dirname, 'node_modules','.bin','lighthouse');
+        if (isWindows) {
+            lighthousePath += ".cmd";
+        } else {
+            chmodSync(lighthousePath, "777");
+        }
+        
+
         tasklib.mkdirP(resultsFolder);
         tasklib.cd(resultsFolder);
         
@@ -26,7 +38,7 @@ async function run() {
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", url.parse(targetURL).hostname! ,report);
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", `${url.parse(targetURL).hostname!}-${url.parse(targetURL).path!}` ,report);
 
                     });
                 },
