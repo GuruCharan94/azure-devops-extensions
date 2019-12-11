@@ -23,8 +23,9 @@ async function run() {
             lighthousePath += ".cmd";
         } else {
             chmodSync(lighthousePath, "777");
-        }        
-
+        }   
+                     
+        tasklib.rmRF(resultsFolder);
         tasklib.mkdirP(resultsFolder);
         tasklib.cd(resultsFolder);
         
@@ -39,10 +40,7 @@ async function run() {
 
                     htmlReports.forEach(report => {
                         tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", attachmentName, report);
-                        tasklib.rmRF(report);
                     });
-                    let htmlReportsCount = tasklib.findMatch(tasklib.cwd(),"*.html");
-                    console.log(htmlReportsCount.length);
                 },
                 (error) => {
                     tasklib.setResult(tasklib.TaskResult.Failed, error);           
