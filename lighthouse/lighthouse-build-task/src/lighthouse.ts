@@ -24,7 +24,7 @@ async function run() {
         } else {
             chmodSync(lighthousePath, "777");
         }   
-                     
+
         tasklib.rmRF(resultsFolder);
         tasklib.mkdirP(resultsFolder);
         tasklib.cd(resultsFolder);
@@ -36,7 +36,7 @@ async function run() {
                 .then(() => {
 
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");                    
-                    let attachmentName = url.parse(targetURL).hostname! + url.parse(targetURL).path!.replace(/\//g, "_");
+                    let attachmentName = (url.parse(targetURL).hostname! + url.parse(targetURL).path!.replace(/\//g, "_")).slice(0, -1);
 
                     htmlReports.forEach(report => {
                         tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", attachmentName, report);
