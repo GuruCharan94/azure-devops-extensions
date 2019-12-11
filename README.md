@@ -10,13 +10,21 @@ Once the extension is installed, you will sea a task that you can use in build /
 
 ![Build Pipeline with Lighthouse Task](lighthouse/images/pipeline-demo.png)
 
-You can see the Lighthouse results as a separate tab part of the build summary containing scan results of all the different URL's scanned.
+You can see the Lighthouse results as a separate tab part of the build summary containing scan results of all the different pages that were scanned.
 
 ## Things to Note
 
 - The Lighthouse scan task does not install chrome on the build agent. Chrome is available on the Hosted VS2017 agent but not available on the Hosted Linux Agent.
 
 - Lighthouse scan results viewable only in older release view on Azure Devops.
+
+This is how to go back to the older release results view.
+
+![Going to Old View](lighthouse/images/release-old-view.png)
+
+And the Lighthouse scan results are available in a separate tab as part of release summary.
+
+![Scan Results Release Tab](lighthouse/images/scan-results-release.png)
 
 ## Contact
 
