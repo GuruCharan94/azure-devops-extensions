@@ -3,7 +3,7 @@
     "name": "googlelighthouse",
     "friendlyName": "Google LightHouse Scan",
     "description": "Runs Google Lighthouse scan against target URL.",
-    "helpMarkDown": "Lighthouse is an open-source, automated tool for improving the quality of web pages. Read more at https://developers.google.com/web/tools/lighthouse/",
+    "helpMarkDown": "Lighthouse is an open-source, automated tool for improving the quality of web pages. Read more [about lighthouse](https://developers.google.com/web/tools/lighthouse/)",
     "category": "Azure Pipelines",
     "author": "Gurucharan94",
     "version": {
@@ -18,7 +18,7 @@
             "type": "string",
             "label": "URL",
             "required": true,
-            "helpMarkDown": "Target URL on which lighthouse scan is run. You can use variables."
+            "helpMarkDown": "Target URL on which lighthouse scan is run. You can also use variables with the $(MyWebsite) syntax"
         },
         {
             "name": "configFilePath",
@@ -32,7 +32,7 @@
             "type": "multiLine",
             "label": "Additional Parameters",
             "required": false,
-            "helpMarkDown": "Additional Command Line Parameters to Lighthouse CLI."
+            "helpMarkDown": "Additional Command Line Parameters to Lighthouse CLI. See available options [here](https://github.com/GoogleChrome/lighthouse#cli-options)"
         }
     ],
     "execution": {

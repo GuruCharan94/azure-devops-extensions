@@ -15,7 +15,6 @@ async function run() {
         let configFilePath: string = tasklib.filePathSupplied('configFilePath') ? 
                                         `--config-path ${tasklib.getPathInput('configFilePath', false, true)}` : "" ;
         let parameters: string = tasklib.getInput('parameters', false) || "";
-
         
         let isWindows: Boolean = os.platform() === "win32";
 
@@ -24,8 +23,7 @@ async function run() {
             lighthousePath += ".cmd";
         } else {
             chmodSync(lighthousePath, "777");
-        }
-        
+        }        
 
         tasklib.mkdirP(resultsFolder);
         tasklib.cd(resultsFolder);
@@ -38,21 +36,19 @@ async function run() {
                     let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", url.parse(targetURL).hostname! ,report);
-
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", 
+                                                url.parse(targetURL).hostname! + '_' + url.parse(targetURL).path!.replace('/','_'),
+                                                report);
                     });
+                    tasklib.rmRF(resultsFolder);
                 },
                 (error) => {
-                    tasklib.setResult(tasklib.TaskResult.Failed, error);            
+                    tasklib.setResult(tasklib.TaskResult.Failed, error);           
                 }
                 )
     }
-    catch (err) {
-        tasklib.setResult(tasklib.TaskResult.Failed, err.message);
-    }
-
-    finally {
-        tasklib.rmRF(resultsFolder);
+    catch (error) {
+        tasklib.setResult(tasklib.TaskResult.Failed, error.message);
     }
 }
 
