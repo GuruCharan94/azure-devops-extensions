@@ -33,14 +33,16 @@ async function run() {
                 .line(`--output json --output html ${parameters} ${configFilePath}`)                
                 .exec()
                 .then(() => {
-                    let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");
+
+                    let htmlReports = tasklib.findMatch(tasklib.cwd(),"*.html");                    
+                    let attachmentName = url.parse(targetURL).hostname! + url.parse(targetURL).path!.replace(/\//g, "_");
 
                     htmlReports.forEach(report => {
-                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", 
-                                                url.parse(targetURL).hostname! + '_' + url.parse(targetURL).path!.replace('/','_'),
-                                                report);
+                        tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", attachmentName, report);
+                        tasklib.rmRF(report);
                     });
-                    tasklib.rmRF(resultsFolder);
+                    let htmlReportsCount = tasklib.findMatch(tasklib.cwd(),"*.html");
+                    console.log(htmlReportsCount.length);
                 },
                 (error) => {
                     tasklib.setResult(tasklib.TaskResult.Failed, error);           
