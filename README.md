@@ -23,4 +23,4 @@ Lighthouse scan results are available in a separate tab as part of release summa
 ## Contact
 
 - For issues, bugs, and feature requests, please [raise an issue](https://github.com/GuruCharan94/azure-devops-extensions/issues/new).
-- You should also join us in the [Azure DevOps Slack Channel](http://www.azuredevops.club/) Slack Channel.
+- You should also join us in the [Azure DevOps Slack Channel](http://www.azuredevops.club/).
