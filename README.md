@@ -6,18 +6,21 @@ This extension runs the Lighthouse scan as part of your Azure Pipelines and publ
 
 ## Getting Started
 
-Once the extension is installed, you will see a task that you can use in build / release steps. Please provide relevant inputs for the Lighthouse scan.
+Once the extension is installed, you will see a task that you can use in build / release steps. Below is a screenshot of a sample build pipeline.
 
 ![Build Pipeline with Lighthouse Task](lighthouse/images/pipeline-demo.png)
 
 You can see the Lighthouse results as a separate tab part of the build summary containing scan results of all the different pages that were scanned.
 
-Lighthouse scan results viewable only in older release view on Azure Devops.
+![Build Results LightHouse](lighthouse/images/build-results.png)
+
+### **Release**
+
+**Lighthouse scan results are available in a separate tab as part of release summary and viewable only in older release view**.
+
 ![Going to Old View](lighthouse/images/release-old-view.png)
 
-And the Lighthouse scan results are available in a separate tab as part of release summary.
-
-![Scan Results Release Tab](lighthouse/images/scan-results-release.png)
+l![Scan Results Release Tab](lighthouse/images/scan-results-release.png)
 
 ## Contact
 
