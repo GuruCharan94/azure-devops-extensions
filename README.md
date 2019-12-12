@@ -14,13 +14,11 @@ You can see the Lighthouse results as a separate tab part of the build summary c
 
 ![Build Results LightHouse](lighthouse/images/build-results.png)
 
-### **Release**
-
-**Lighthouse scan results are available in a separate tab as part of release summary and viewable only in older release view**.
+Lighthouse scan results are available in a separate tab as part of release summary and **viewable only in older release view**.
 
 ![Going to Old View](lighthouse/images/release-old-view.png)
 
-l![Scan Results Release Tab](lighthouse/images/scan-results-release.png)
+![Scan Results Release Tab](lighthouse/images/scan-results-release.png)
 
 ## Contact
 
