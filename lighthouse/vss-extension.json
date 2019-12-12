@@ -79,7 +79,13 @@
     ],
     "screenshots": [
         {
-            "path": "images/lighthouse.png"
+            "path": "images/pipeline-demo.png"        
+        },
+        {
+            "path": "images/build-results.png"        
+        },
+        {
+            "path": "images/scan-results-release.png"        
         }
     ],
     "content": {
