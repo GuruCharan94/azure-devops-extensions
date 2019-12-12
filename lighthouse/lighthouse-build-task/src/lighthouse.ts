@@ -40,10 +40,9 @@ async function run() {
                         let fileCreatedTime = fs.statSync(file).ctime.getTime();
                         if(fileCreatedTime > referenceTime)
                         {
+                            // Replace '/' with _ because file name cannot contain '/'.
                             let attachmentName = (url.parse(targetURL).hostname! + url.parse(targetURL).path!.replace(/\//g, "_")).slice(0, -1);
-                            htmlReports.forEach(report => {
-                                tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", attachmentName, report);
-                            });
+                            tasklib.addAttachment("gurucharan94.lighthouse-html-artifact", attachmentName, file);
                         }
                     })
                 },
