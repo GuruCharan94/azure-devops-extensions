@@ -9,8 +9,7 @@
     "author": "Gurucharan94",
     "license": "MIT",
     "dependencies": {
-        "azure-pipelines-task-lib": "2.8.0",
-        "puppeteer": "2.0.0"
+        "azure-pipelines-task-lib": "2.8.0"
     },
     "devDependencies": {
         "@types/node": "^12.7.2",
