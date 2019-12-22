@@ -17,9 +17,9 @@
             "name": "command",
             "type": "pickList",
             "label": "Command",
-            "defaultValue": "build",
+            "defaultValue": "healthcheck",
             "required": true,
-            "helpMarkDown": "The dotnet command to run. Select 'Custom' to add arguments or use a command not listed here.",
+            "helpMarkDown": "The lhci command to run",
             "options": {
                 "healthcheck": "healthcheck",
                 "collect" : "collect",
@@ -48,7 +48,7 @@
     ],
     "execution": {
         "Node": {
-            "target": "src/lighthouse.js"
+            "target": "src/lighthouse-ci.js"
         }
     }
 }
