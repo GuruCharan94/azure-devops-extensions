@@ -1,0 +1,19 @@
+{
+    "name": "lighthouse-build-task",
+    "version": "1.0.0",
+    "description": "Lighthouse extension for Azure Devops",
+    "main": "lighthouse.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Gurucharan94",
+    "license": "MIT",
+    "dependencies": {
+        "azure-pipelines-task-lib": "2.8.0",
+        "puppeteer": "2.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^12.7.2",
+        "@types/q": "^1.5.2"
+    }
+}

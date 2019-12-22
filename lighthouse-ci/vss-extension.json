@@ -1,0 +1,62 @@
+{
+    "manifestVersion": 1,
+    "id": "lighthouse-ci",
+    "name": "LightHouse CI",
+    "version": "0.0.1",
+    "publisher": "gurucharan",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+	"scopes": [
+        "vso.build",
+        "vso.release"
+    ],
+    "description": "Lighthouse CI Extension for Azure Devops",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "images/lighthouse.png"        
+    },
+    "files": [
+        {
+            "path": "lighthouse-ci-build-task"
+        }
+    ],
+    "tags": [
+        "lighthouse",
+        "web",
+        "performance",
+        "accessibility",
+        "a11y",
+        "seo"
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/GuruCharan94/azure-devops-extensions"
+    },
+    "contributions": [
+        {
+            "id": "custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "lighthouse-ci-build-task"
+            }
+        }
+    ],
+    "screenshots": [ 
+    ],
+    "content": {
+        "details": {
+            "path": "README.md"
+        },
+        "license": {
+            "path": "LICENSE.md"
+        }
+    }
+}
