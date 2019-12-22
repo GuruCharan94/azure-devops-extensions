@@ -8,25 +8,34 @@ import * as os from "os";
 async function run() {
     try {
 
-        let node = tasklib.tool('node');
-        let lighthouseCIPath: string = path.join(__dirname, 'node_modules', '@lhci', 'cli', 'src', 'cli.js');
-
+        /// let lighthouseCIPath: string = path.join(__dirname, 'node_modules', '.bin', 'lhci');
+        let lighthouseCIPath: string = tasklib.which('lhci');
+        
         // Read Inputs
         let command: string = tasklib.getInput('command');
         let configFilePath: string = tasklib.filePathSupplied('configFilePath') ?
             `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
         let parameters: string = tasklib.getInput('parameters', false) || "";
 
+        let isWindows: Boolean = os.platform() === "win32";
 
-        node.arg(lighthouseCIPath)
+        if (isWindows) {
+            lighthouseCIPath += ".cmd";
+        } else {
+            fs.chmodSync(lighthouseCIPath, "777");
+        }
+
+        let lighthouse = tasklib.tool('lhci');
+
+        lighthouse
             .line(`${command} ${configFilePath} ${parameters}`)
             .exec()
             .then(() => {
             },
-            (error) => {
-                tasklib.setResult(tasklib.TaskResult.Failed, error);
-            }
-        )
+                (error) => {
+                    tasklib.setResult(tasklib.TaskResult.Failed, error);
+                }
+            )
     }
     catch (error) {
         tasklib.setResult(tasklib.TaskResult.Failed, error.message);

@@ -17,18 +17,27 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tasklib = require("azure-pipelines-task-lib/task");
-const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
+const os = __importStar(require("os"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let node = tasklib.tool('node');
-            let lighthouseCIPath = path.join(__dirname, 'node_modules', '@lhci', 'cli', 'src', 'cli.js');
+            /// let lighthouseCIPath: string = path.join(__dirname, 'node_modules', '.bin', 'lhci');
+            let lighthouseCIPath = tasklib.which('lhci');
             // Read Inputs
-            let command = tasklib.getInput('command') || 'healthcheck';
+            let command = tasklib.getInput('command');
             let configFilePath = tasklib.filePathSupplied('configFilePath') ?
                 `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
             let parameters = tasklib.getInput('parameters', false) || "";
-            node.arg(lighthouseCIPath)
+            let isWindows = os.platform() === "win32";
+            if (isWindows) {
+                lighthouseCIPath += ".cmd";
+            }
+            else {
+                fs.chmodSync(lighthouseCIPath, "777");
+            }
+            let lighthouse = tasklib.tool('lhci');
+            lighthouse
                 .line(`${command} ${configFilePath} ${parameters}`)
                 .exec()
                 .then(() => {
