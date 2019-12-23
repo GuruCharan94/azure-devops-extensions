@@ -32,6 +32,18 @@
             }
         },
         {
+            "name": "targetArtifact",
+            "type": "picklist",
+            "label": "Target Artifact Name",
+            "required": true,
+            "defaultValue": "Build Pipeline",
+            "visibleRule": "(command == upload || command == autorun)",
+            "helpMarkDown": "Name of Target Artifact from which LHCI calculates build context. When executing task in build pipeline, leave default value. When in release, pick artifact from the dropdown.",
+            "properties": {
+                "EditableOptions": "True"
+            }
+        },
+        {
             "name": "configFilePath",
             "type": "filePath",
             "label": "Path to Config File",
@@ -45,6 +57,14 @@
             "required": false,
             "helpMarkDown": "CLI options for Lighthouse CI."
         }
+    ],
+    "sourceDefinitions": [
+        {            
+            "target": "targetArtifact",            
+            "endpoint": "/$(system.teamProject)/_apis/release/releases/$(release.releaseId)?api-version=4.1-preview.6",
+            "selector": "jsonpath:$.artifacts[*].alias",
+            "authKey": "tfs:teamfoundation"
+        }  
     ],
     "execution": {
         "Node": {
