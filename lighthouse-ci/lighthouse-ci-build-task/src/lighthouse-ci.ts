@@ -7,31 +7,33 @@ import * as os from "os";
 
 async function run() {
     try {
-
-        // LHCI Prep
-        let lighthouseCIPath: string = tasklib.which('lhci');
-        let isWindows: Boolean = os.platform() === "win32";
-        if (isWindows) {
-            lighthouseCIPath += ".cmd";
-        } else {
-            fs.chmodSync(lighthouseCIPath, "777");
-        }
-
-
+        
         // Read Inputs
         let command: string = tasklib.getInput('command');
         let configFilePath: string = tasklib.filePathSupplied('configFilePath') ?
             `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
         let parameters: string = tasklib.getInput('parameters', false) || "";
-
-        // If path to Lighthouse CI config is provided, change cwd to the folder containing the file.
-        // All path to related files, Lighthouse & Puppeteer Config is there.
-        if(configFilePath) 
-        {
-            tasklib.cd(path.dirname(tasklib.getPathInput('configFilePath')));
-        }
+        let targetArtifact: string = tasklib.getInput('')
         
+        // LHCI CWD Prep
+        let LHCI_DIR = tasklib.getTaskVariable('LHCI_DIR');
+        if(!LHCI_DIR)
+        {
+            LHCI_DIR = tasklib.cwd(); // Directory inside which lighthouse is executed.
+            if (configFilePath) {
+                // If path to Lighthouse CI config is provided, change cwd to the folder containing the file.
+                // All path to related files, Lighthouse & Puppeteer Config is there.
+                LHCI_DIR=path.dirname(tasklib.getPathInput('configFilePath'));
+            }
+        }
+        tasklib.cd(LHCI_DIR);
+
+        // Get settings
+        
+
+
         // Execute Lighthouse
+        tasklib.setTaskVariable("LHCI_DIR",LHCI_DIR, false);
         let lighthouse = tasklib.tool('lhci');
         lighthouse
             .line(`${command} ${configFilePath} ${parameters}`)
