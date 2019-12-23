@@ -24,8 +24,7 @@
                 "healthcheck": "healthcheck",
                 "collect" : "collect",
                 "assert": "assert",
-                "upload": "upload",
-                "autorun": "autorun"
+                "upload": "upload"
             },
             "properties": {
                 "EditableOptions": "False"
@@ -37,7 +36,7 @@
             "label": "Target Artifact Name",
             "required": true,
             "defaultValue": "Build Pipeline",
-            "visibleRule": "(command == upload || command == autorun)",
+            "visibleRule": "command == upload",
             "helpMarkDown": "Name of Target Artifact from which LHCI calculates build context. When executing task in build pipeline, leave default value. When in release, pick artifact from the dropdown.",
             "properties": {
                 "EditableOptions": "True"
