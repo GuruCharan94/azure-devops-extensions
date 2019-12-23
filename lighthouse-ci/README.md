@@ -1,4 +1,4 @@
-# Lighthouse CI extension for Azure Devops
+# Lighthouse CI
 
 [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) is a set of commands that make continuously running, asserting, saving, and retrieving [Lighthouse](https://github.com/GoogleChrome/lighthouse) results as easy as possible.
 
@@ -9,11 +9,6 @@ This extension runs Lighthouse CI scan as part of your Azure Pipelines.
 ## Getting Started with Lighthouse CI for Azure Devops
 
 Once the extension is installed, you will see a task that you can use in build / release steps. Below is a screenshot of a sample build pipeline.
-
-TODO
-
-- All possible options
-- Service Connections ??
 
 ## Contact
 
