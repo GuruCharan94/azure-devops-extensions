@@ -8,25 +8,31 @@ import * as os from "os";
 async function run() {
     try {
 
-        /// let lighthouseCIPath: string = path.join(__dirname, 'node_modules', '.bin', 'lhci');
+        // LHCI Prep
         let lighthouseCIPath: string = tasklib.which('lhci');
-        
-        // Read Inputs
-        let command: string = tasklib.getInput('command');
-        let configFilePath: string = tasklib.filePathSupplied('configFilePath') ?
-            `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
-        let parameters: string = tasklib.getInput('parameters', false) || "";
-
         let isWindows: Boolean = os.platform() === "win32";
-
         if (isWindows) {
             lighthouseCIPath += ".cmd";
         } else {
             fs.chmodSync(lighthouseCIPath, "777");
         }
 
-        let lighthouse = tasklib.tool('lhci');
 
+        // Read Inputs
+        let command: string = tasklib.getInput('command');
+        let configFilePath: string = tasklib.filePathSupplied('configFilePath') ?
+            `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
+        let parameters: string = tasklib.getInput('parameters', false) || "";
+
+        // If path to Lighthouse CI config is provided, change cwd to the folder containing the file.
+        // All path to related files, Lighthouse & Puppeteer Config is there.
+        if(configFilePath) 
+        {
+            tasklib.cd(path.dirname(tasklib.getPathInput('configFilePath')));
+        }
+        
+        // Execute Lighthouse
+        let lighthouse = tasklib.tool('lhci');
         lighthouse
             .line(`${command} ${configFilePath} ${parameters}`)
             .exec()
