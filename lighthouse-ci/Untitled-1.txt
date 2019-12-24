@@ -41,3 +41,12 @@ else
 
 - LHCI_BUILD_CONTEXT__AVATAR_URL
     N/A
+ 
+"sourceDefinitions": [
+        {            
+            "target": "targetArtifact",            
+            "endpoint": "/$(system.teamProject)/_apis/release/releases/$(release.releaseId)?api-version=4.1-preview.6",
+            "selector": "jsonpath:$.artifacts[*].alias",
+            "authKey": "tfs:teamfoundation"
+        }  
+    ],

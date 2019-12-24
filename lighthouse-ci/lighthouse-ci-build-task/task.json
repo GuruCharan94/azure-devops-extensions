@@ -7,8 +7,8 @@
     "category": "Azure Pipelines",
     "author": "Gurucharan94",
     "version": {
-        "Major": 0,
-        "Minor": 1,
+        "Major": 1,
+        "Minor": 0,
         "Patch": 0
     },
     "instanceNameFormat": "Run LightHouse CI",
@@ -31,13 +31,12 @@
             }
         },
         {
-            "name": "targetArtifact",
-            "type": "picklist",
+            "name": "targetArtifactPath",
+            "type": "filePath",
             "label": "Target Artifact Name",
-            "required": true,
-            "defaultValue": "Build Pipeline",
             "visibleRule": "command == upload",
-            "helpMarkDown": "Name of Target Artifact from which LHCI calculates build context. When executing task in build pipeline, leave default value. When in release, pick artifact from the dropdown.",
+            "required": true,
+            "helpMarkDown": "Inside a release pipeline, point to the root of the target artifact from where to pick metadata to populate [build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context). Leave this unchanged to automatically picks metadata from primary artifact. Inside a build pipeline, the metadata is inferred from git repo and this field is ignored.",
             "properties": {
                 "EditableOptions": "True"
             }
@@ -56,14 +55,6 @@
             "required": false,
             "helpMarkDown": "CLI options for Lighthouse CI."
         }
-    ],
-    "sourceDefinitions": [
-        {            
-            "target": "targetArtifact",            
-            "endpoint": "/$(system.teamProject)/_apis/release/releases/$(release.releaseId)?api-version=4.1-preview.6",
-            "selector": "jsonpath:$.artifacts[*].alias",
-            "authKey": "tfs:teamfoundation"
-        }  
     ],
     "execution": {
         "Node": {
