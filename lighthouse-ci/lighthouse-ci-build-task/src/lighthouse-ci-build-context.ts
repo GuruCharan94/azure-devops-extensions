@@ -18,7 +18,7 @@ export class BuildContext {
 
     constructor(targetArtifactPath: string) {
 
-        if (tasklib.getVariable('BUILD_BUILD')) {
+        if (tasklib.getVariable('BUILD_BUILDID')) {
 
             tasklib.debug('Running Inside a Build Pipeline. Infer Build Context from Git Repo');
             this.inferBuildContextFromBuild();
@@ -28,7 +28,7 @@ export class BuildContext {
             tasklib.debug('Running Inside a Release Pipeline. Infer Build Context from Chosen Artifact');
             this.inferBuildContextFromRelease(targetArtifactPath);
         }
-        
+
         this.setBuildContextAsTaskVariable();
     }
 
@@ -49,11 +49,11 @@ export class BuildContext {
             artifactAlias = path.basename(tasklib.getVariable('targetArtifactPath')).toUpperCase();
         }
 
-        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME}`);
+        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`);
         this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`);
         this.LHCI_BUILD_CONTEXT__COMMIT_TIME = tasklib.getVariable(`RELEASE_DEPLOYMENT_STARTTIME`);
         this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = `${tasklib.getVariable('RELEASE_DEFINITIONNAME')} - ${tasklib.getVariable('RELEASE_RELEASENAME')} - ${tasklib.getVariable('RELEASE_ENVIRONMENTNAME')}`;
-        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCHNAME`);
+        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`);
         this.LHCI_BUILD_CONTEXT__AUTHOR = `${tasklib.getVariable('RELEASE_RELEASENAME')}`;
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = tasklib.getVariable('RELEASE_RELEASEWEBURL');
     }
