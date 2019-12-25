@@ -32,7 +32,7 @@ export class BuildContext {
     }
 
     private  inferBuildContextFromBuild() {
-        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('BUILD__REPOSITORY_NAME');
+        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('BUILD_REPOSITORY_NAME');
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}`;
         // other variables are inferred from git by LHCI.
     }
