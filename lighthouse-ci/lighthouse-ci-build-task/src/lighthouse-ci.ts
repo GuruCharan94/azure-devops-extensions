@@ -79,10 +79,10 @@ export class lighthouseCI {
             let filePath = path.join(tempDirectory, uuidV4() + '.sh');
             
             if (os.platform() === "win32") {
-                fs.writeFileSync(filePath, 'npm install -g @lhci/cli pupeteer', { encoding: 'utf8' });
+                fs.writeFileSync(filePath, 'npm install -g @lhci/cli puppeteer', { encoding: 'utf8' });
             }
             else {
-                fs.writeFileSync(filePath, 'sudo npm install -g @lhci/cli pupeteer', { encoding: 'utf8' });
+                fs.writeFileSync(filePath, 'sudo npm install -g @lhci/cli puppeteer', { encoding: 'utf8' });
             }
 
             tasklib.tool(tasklib.which('bash', true))
