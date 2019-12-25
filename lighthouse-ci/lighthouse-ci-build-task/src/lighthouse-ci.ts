@@ -13,6 +13,7 @@ class Settings {
     public LightHouseWorkingDirectory: string = tasklib.getVariable('LHCI_WorkingDirectory');
 
     public ApplyBuildContext() {
+        this.IsBuildContextApplied = true;
         tasklib.setVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
     }
 

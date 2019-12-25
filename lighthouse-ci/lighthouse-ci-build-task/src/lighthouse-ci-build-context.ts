@@ -40,7 +40,6 @@ export class BuildContext {
     private inferBuildContextFromRelease(targetArtifactPath: string) {
         let artifactAlias: string;
 
-        // Choose Provided
         if (!targetArtifactPath) {
             artifactAlias = tasklib.getVariable('RELEASE_PRIMARYARTIFACTSOURCEALIAS').toUpperCase();
         }
