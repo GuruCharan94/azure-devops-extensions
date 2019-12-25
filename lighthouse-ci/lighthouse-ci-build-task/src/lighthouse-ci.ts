@@ -9,14 +9,15 @@ import { BuildContext } from './lighthouse-ci-build-context';
 
 class Settings {
 
-    public static IsBuildContextApplied: boolean = tasklib.getTaskVariable('LHCI_BuildContextApplied') ? true : false;
-    public static LightHouseWorkingDirectory: string = tasklib.getTaskVariable('LightHouseWorkingDirectory');
+    public IsBuildContextApplied: boolean = tasklib.getTaskVariable('LHCI_BuildContextApplied') ? true : false;
+    public LightHouseWorkingDirectory: string = tasklib.getTaskVariable('LightHouseWorkingDirectory');
 
-    public static ApplyBuildContext() {
+    public ApplyBuildContext() {
         tasklib.setTaskVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
     }
 
-    public static SetLightHouseWorkingDirectory(path: string) {
+    public SetLightHouseWorkingDirectory(path: string) {
+        this.LightHouseWorkingDirectory = path;
         tasklib.setTaskVariable("LightHouseWorkingDirectory", path, false);
     }
 }
@@ -67,20 +68,21 @@ export class lighthouseCI {
 
         //let npm =  tasklib.tool('npm');
         //await npm.arg("install -g @lhci/cli puppeteer").exec();        
-        
-        if (!Settings.IsBuildContextApplied) {
+        let settings = new Settings();
+
+        if (!settings.IsBuildContextApplied) {
             new BuildContext(this.targetArtifact);
-            Settings.ApplyBuildContext();
+            settings.ApplyBuildContext();
         }
-        if (!Settings.LightHouseWorkingDirectory) {
+        if (!settings.LightHouseWorkingDirectory) {
             if (this.configFilePath) {
-                Settings.SetLightHouseWorkingDirectory(path.dirname(tasklib.getPathInput('configFilePath')));
+                settings.SetLightHouseWorkingDirectory(path.dirname(tasklib.getPathInput('configFilePath')));
             }
             else {
-                Settings.SetLightHouseWorkingDirectory(tasklib.cwd());
+                settings.SetLightHouseWorkingDirectory(tasklib.cwd());
             }
         }
-        tasklib.cd(Settings.LightHouseWorkingDirectory);
+        tasklib.cd(settings.LightHouseWorkingDirectory);
     }
 }
 
