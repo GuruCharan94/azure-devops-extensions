@@ -28,7 +28,7 @@ export class BuildContext {
             this.inferBuildContextFromBuild();
         }
 
-        this.setBuildContextAsTaskVariable();
+        this.setBuildContextAsVariable();
     }
 
     private  inferBuildContextFromBuild() {
@@ -56,14 +56,17 @@ export class BuildContext {
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = tasklib.getVariable('RELEASE_RELEASEWEBURL');
     }
 
-    private setBuildContextAsTaskVariable()
+    private setBuildContextAsVariable()
     {
+        tasklib.debug('------------------ Build Context-------------------');
         for (var key of Object.keys(this)) {
 
             if (key.startsWith('LHCI_BUILD_CONTEXT') && this[key]) {
+                
                 tasklib.debug(key + " -> " + this[key]);
-                tasklib.setTaskVariable(key, this[key], false);
+                tasklib.setVariable(key, this[key], false);
             }
         }
+        tasklib.debug('------------------ Build Context-------------------');
     }
 }

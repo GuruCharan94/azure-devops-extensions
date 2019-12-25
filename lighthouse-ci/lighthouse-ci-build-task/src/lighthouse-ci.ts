@@ -72,10 +72,14 @@ export class lighthouseCI {
         let settings = new Settings();
 
         if (!settings.IsBuildContextApplied) {
+            tasklib.debug('Setting Up Build Context for LHCI..')
             new BuildContext(this.targetArtifact);
             settings.ApplyBuildContext();
+            tasklib.debug('Done..');
+
         }
         if (!settings.LightHouseWorkingDirectory) {
+            tasklib.debug('Setting Working Directory..');
             if (this.configFilePath) {
                 settings.SetLightHouseWorkingDirectory(path.dirname(tasklib.getPathInput('configFilePath')));
             }
@@ -84,6 +88,7 @@ export class lighthouseCI {
             }
         }
         tasklib.cd(settings.LightHouseWorkingDirectory);
+        tasklib.debug(`Working Dir Set to ${settings.LightHouseWorkingDirectory}`);
     }
 }
 
