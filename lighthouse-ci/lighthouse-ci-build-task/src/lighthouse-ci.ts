@@ -7,6 +7,20 @@ import * as os from "os";
 import { throws } from 'assert';
 import { BuildContext } from './lighthouse-ci-build-context';
 
+class Settings {
+
+    public static IsBuildContextApplied: boolean = tasklib.getTaskVariable('LHCI_BuildContextApplied') ? true : false;
+    public static LightHouseWorkingDirectory: string = tasklib.getTaskVariable('LightHouseWorkingDirectory');
+
+    public static ApplyBuildContext() {
+        tasklib.setTaskVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
+    }
+
+    public static SetLightHouseWorkingDirectory(path: string) {
+        tasklib.setTaskVariable("LightHouseWorkingDirectory", path, false);
+    }
+}
+
 export class lighthouseCI {
 
     private command: string;
@@ -24,32 +38,17 @@ export class lighthouseCI {
 
         this.targetArtifact = tasklib.filePathSupplied('targetArtifactPath') ?
             `${tasklib.getPathInput('targetArtifactPath', false, true)}` : "";
-
-        if (!tasklib.getTaskVariable('LHCI_BUILD_CONTEXT_FLAG')) { // If Variable not set in previous task.
-            new BuildContext(this.targetArtifact);
-            tasklib.setTaskVariable("LHCI_BUILD_CONTEXT_FLAG", 'SET', false); // Set Variable
-        }
     }
-
 
     public async run() {
 
         try {
-            // LHCI CWD Prep
-            let LHCI_DIR = tasklib.getTaskVariable('LHCI_DIR');
-            if (!LHCI_DIR) {
-                LHCI_DIR = tasklib.cwd(); // Directory inside which lighthouse is executed.
-                if (this.configFilePath) {
-                    // If path to Lighthouse CI config is provided, change cwd to the folder containing the file.
-                    // All path to related files, Lighthouse & Puppeteer Config is there.
-                    LHCI_DIR = path.dirname(tasklib.getPathInput('configFilePath'));
-                }
-            }
-            tasklib.cd(LHCI_DIR);
 
-            // Execute Lighthouse
-            tasklib.setTaskVariable("LHCI_DIR", LHCI_DIR, false);
+            this.Init();
+
+
             let lighthouse = tasklib.tool('lhci');
+
             lighthouse
                 .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
                 .exec()
@@ -63,6 +62,27 @@ export class lighthouseCI {
         catch (error) {
             tasklib.setResult(tasklib.TaskResult.Failed, error.message);
         }
+    }
+
+    private Init() {
+
+        tasklib.tool('npm')
+        .arg()
+        .execSync()
+
+        if (!Settings.IsBuildContextApplied) {
+            new BuildContext(this.targetArtifact);
+            Settings.ApplyBuildContext();
+        }
+        if (!Settings.LightHouseWorkingDirectory) {
+            if (this.configFilePath) {
+                Settings.SetLightHouseWorkingDirectory(path.dirname(tasklib.getPathInput('configFilePath')));
+            }
+            else {
+                Settings.SetLightHouseWorkingDirectory(tasklib.cwd());
+            }
+        }
+        tasklib.cd(Settings.LightHouseWorkingDirectory);
     }
 }
 

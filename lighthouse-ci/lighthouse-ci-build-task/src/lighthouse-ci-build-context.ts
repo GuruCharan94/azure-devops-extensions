@@ -18,15 +18,14 @@ export class BuildContext {
 
     constructor(targetArtifactPath: string) {
 
-        if (tasklib.getVariable('BUILD_BUILDID')) {
+        if (tasklib.getVariable('RELEASE_RELEASEID')) {
 
-            tasklib.debug('Running Inside a Build Pipeline. Infer Build Context from Git Repo');
-            this.inferBuildContextFromBuild();
-
-        }
-        else {
             tasklib.debug('Running Inside a Release Pipeline. Infer Build Context from Chosen Artifact');
             this.inferBuildContextFromRelease(targetArtifactPath);
+        }
+        else {
+            tasklib.debug('Running Inside a Build Pipeline. Infer Build Context from Git Repo');
+            this.inferBuildContextFromBuild();
         }
 
         this.setBuildContextAsTaskVariable();
