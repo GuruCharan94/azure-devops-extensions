@@ -44,7 +44,7 @@ export class BuildContext {
             artifactAlias = tasklib.getVariable('RELEASE_PRIMARYARTIFACTSOURCEALIAS').toUpperCase();
         }
         else {
-            artifactAlias = path.basename(tasklib.getVariable('targetArtifactPath')).toUpperCase();
+            artifactAlias = path.basename('targetArtifactPath').toUpperCase();
         }
 
         this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`);

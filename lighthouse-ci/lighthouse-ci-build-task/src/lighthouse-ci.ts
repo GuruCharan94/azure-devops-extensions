@@ -31,6 +31,7 @@ export class lighthouseCI {
     private targetArtifact: string;
 
     constructor() {
+
         this.command = tasklib.getInput('command');
 
         this.configFilePath = tasklib.filePathSupplied('configFilePath') ?
@@ -40,6 +41,8 @@ export class lighthouseCI {
 
         this.targetArtifact = tasklib.filePathSupplied('targetArtifactPath') ?
             `${tasklib.getPathInput('targetArtifactPath', false, true)}` : "";
+        
+        // This field is only populated when command type = healthcheck.
     }
 
     public async run() {
