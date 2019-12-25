@@ -70,7 +70,7 @@ export class lighthouseCI {
 
     private async Init() {
 
-        if(tasklib.which('lhci', false)){
+        if(!tasklib.which('lhci', false)){
 
             tasklib.debug('Lighthouse CI not found. Installing NPM Package..')
 
@@ -90,7 +90,7 @@ export class lighthouseCI {
                     .arg(`--norc`)
                     .arg(filePath)
                     .execSync();
-                    
+
             tasklib.debug('Installed..')
         }
         
