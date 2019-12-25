@@ -75,6 +75,11 @@ export class lighthouseCI {
         let settings = new Settings();
 
         if (!settings.IsBuildContextApplied) {
+            if (this.command != "healthcheck") {
+
+                tasklib.error('You have to first run Lighthouse CI health check and then run with other commands')
+                
+            }
             tasklib.debug('Setting Up Build Context for LHCI..')
             new BuildContext(this.targetArtifact);
             settings.ApplyBuildContext();
