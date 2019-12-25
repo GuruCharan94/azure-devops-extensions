@@ -31,13 +31,13 @@ export class BuildContext {
         this.setBuildContextAsTaskVariable();
     }
 
-    private async inferBuildContextFromBuild() {
+    private  inferBuildContextFromBuild() {
         this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('BUILD__REPOSITORY_NAME');
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}`;
         // other variables are inferred from git by LHCI.
     }
 
-    private async inferBuildContextFromRelease(targetArtifactPath: string) {
+    private inferBuildContextFromRelease(targetArtifactPath: string) {
         let artifactAlias: string;
 
         // Choose Provided
@@ -57,7 +57,7 @@ export class BuildContext {
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = tasklib.getVariable('RELEASE_RELEASEWEBURL');
     }
 
-    private async setBuildContextAsTaskVariable()
+    private setBuildContextAsTaskVariable()
     {
         for (var key of Object.keys(this)) {
 

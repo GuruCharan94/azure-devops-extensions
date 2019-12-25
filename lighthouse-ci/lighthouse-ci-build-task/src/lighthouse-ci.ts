@@ -9,16 +9,16 @@ import { BuildContext } from './lighthouse-ci-build-context';
 
 class Settings {
 
-    public IsBuildContextApplied: boolean = tasklib.getTaskVariable('LHCI_BuildContextApplied') ? true : false;
-    public LightHouseWorkingDirectory: string = tasklib.getTaskVariable('LightHouseWorkingDirectory');
+    public IsBuildContextApplied: boolean = tasklib.getVariable('LHCI_BuildContextApplied') ? true : false;
+    public LightHouseWorkingDirectory: string = tasklib.getVariable('LHCI_WorkingDirectory');
 
     public ApplyBuildContext() {
-        tasklib.setTaskVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
+        tasklib.setVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
     }
 
     public SetLightHouseWorkingDirectory(path: string) {
         this.LightHouseWorkingDirectory = path;
-        tasklib.setTaskVariable("LightHouseWorkingDirectory", path, false);
+        tasklib.setVariable("LHCI_WorkingDirectory", path, false);
     }
 }
 
@@ -64,7 +64,7 @@ export class lighthouseCI {
         }
     }
 
-    private async Init() {
+    private Init() {
 
         //let npm =  tasklib.tool('npm');
         //await npm.arg("install -g @lhci/cli puppeteer").exec();        
