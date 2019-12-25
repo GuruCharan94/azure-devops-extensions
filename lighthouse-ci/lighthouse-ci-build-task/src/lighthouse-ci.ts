@@ -46,7 +46,6 @@ export class lighthouseCI {
 
             this.Init();
 
-
             let lighthouse = tasklib.tool('lhci');
 
             lighthouse
@@ -65,11 +64,7 @@ export class lighthouseCI {
     }
 
     private Init() {
-
-        tasklib.tool('npm')
-        .arg()
-        .execSync()
-
+        
         if (!Settings.IsBuildContextApplied) {
             new BuildContext(this.targetArtifact);
             Settings.ApplyBuildContext();
