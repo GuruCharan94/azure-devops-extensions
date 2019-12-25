@@ -65,8 +65,8 @@ export class lighthouseCI {
 
     private async Init() {
 
-        let npm =  tasklib.tool('npm');
-        await npm.arg("install -g @lhci/cli puppeteer").exec();        
+        //let npm =  tasklib.tool('npm');
+        //await npm.arg("install -g @lhci/cli puppeteer").exec();        
         
         if (!Settings.IsBuildContextApplied) {
             new BuildContext(this.targetArtifact);
