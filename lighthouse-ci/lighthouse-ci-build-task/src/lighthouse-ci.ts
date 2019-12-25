@@ -6,6 +6,7 @@ import * as fs from "fs";
 import * as os from "os";
 import { throws } from 'assert';
 import { BuildContext } from './lighthouse-ci-build-context';
+var uuidV4 = require('uuid/v4');
 
 class Settings {
 
@@ -41,7 +42,7 @@ export class lighthouseCI {
 
         this.targetArtifact = tasklib.filePathSupplied('targetArtifactPath') ?
             `${tasklib.getPathInput('targetArtifactPath', false, true)}` : "";
-        
+
         // This field is only populated when command type = healthcheck.
     }
 
@@ -52,7 +53,6 @@ export class lighthouseCI {
             this.Init();
 
             let lighthouse = tasklib.tool('lhci');
-
             lighthouse
                 .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
                 .exec()
@@ -68,17 +68,39 @@ export class lighthouseCI {
         }
     }
 
-    private Init() {
+    private async Init() {
 
-        //let npm =  tasklib.tool('npm');
-        //await npm.arg("install -g @lhci/cli puppeteer").exec();        
+        if(tasklib.which('lhci', false)){
+
+            tasklib.debug('Lighthouse CI not found. Installing NPM Package..')
+
+            let tempDirectory = tasklib.getVariable('agent.tempDirectory');
+            tasklib.checkPath(tempDirectory, `${tempDirectory} (agent.tempDirectory)`);
+            let filePath = path.join(tempDirectory, uuidV4() + '.sh');
+            
+            if (os.platform() === "win32") {
+                fs.writeFileSync(filePath, 'npm install -g @lhci/cli pupeteer', { encoding: 'utf8' });
+            }
+            else {
+                fs.writeFileSync(filePath, 'sudo npm install -g @lhci/cli pupeteer', { encoding: 'utf8' });
+            }
+
+            tasklib.tool(tasklib.which('bash', true))
+                    .arg('--noprofile')
+                    .arg(`--norc`)
+                    .arg(filePath)
+                    .execSync();
+                    
+            tasklib.debug('Installed..')
+        }
+        
         let settings = new Settings();
 
         if (!settings.IsBuildContextApplied) {
             if (this.command != "healthcheck") {
 
                 tasklib.error('You have to first run Lighthouse CI health check and then run with other commands')
-                
+
             }
             tasklib.debug('Setting Up Build Context for LHCI..')
             new BuildContext(this.targetArtifact);
