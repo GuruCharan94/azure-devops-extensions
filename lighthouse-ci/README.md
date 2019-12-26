@@ -4,8 +4,6 @@
 
 This extension runs Lighthouse CI as part of your Azure Pipelines.
 
-- TODO : Link to Getting Started with lighthouse blog post.
-
 ## Getting Started with Lighthouse CI for Azure Devops
 
 Once the extension is installed, you will see Lighthouse CI task that you can use in build / release pipelines. Below is a screenshot of a sample build pipeline.
