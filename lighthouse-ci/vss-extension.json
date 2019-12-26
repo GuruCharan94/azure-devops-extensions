@@ -18,7 +18,7 @@
         "Azure Pipelines"
     ],
     "icons": {
-        "default": "images/lighthouse.png"        
+        "default": "images/lhci.png"        
     },
     "files": [
         {
@@ -50,6 +50,9 @@
         }
     ],
     "screenshots": [ 
+        {
+            "path": "images/demo-pipeline.png"        
+        }
     ],
     "content": {
         "details": {

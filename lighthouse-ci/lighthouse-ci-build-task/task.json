@@ -1,44 +1,41 @@
 {
     "id": "a7ea6fda-6f72-4e20-a1a7-4cd0bcbf7b61",
     "name": "lighthouse-ci",
-    "friendlyName": "Lighthouse CI",
-    "description": "Lighthouse CI",
-    "helpMarkDown": "Lighthouse CI",
+    "friendlyName": "Lighthouse CI Extension",
+    "description": "Automate running Lighthouse for every commit, viewing the changes, and preventing regressions",
+    "helpMarkDown": "Automate running Lighthouse for every commit, viewing the changes, and preventing regressions. Read more about [LightHouse CI](https://github.com/GoogleChrome/lighthouse-ci)",
     "category": "Azure Pipelines",
-    "author": "Gurucharan94",
+    "author": "@Gurucharan94",
     "version": {
-        "Major": 0,
-        "Minor": 1,
+        "Major": 1,
+        "Minor": 0,
         "Patch": 0
     },
-    "instanceNameFormat": "Run LightHouse CI",
+    "instanceNameFormat": "Run LightHouse CI $(command)",
     "inputs": [
         {
             "name": "command",
             "type": "pickList",
             "label": "Command",
             "defaultValue": "healthcheck",
-            "required": true,
+            "required": false,
             "helpMarkDown": "The lhci command to run",
             "options": {
                 "healthcheck": "healthcheck",
                 "collect" : "collect",
                 "assert": "assert",
-                "upload": "upload",
-                "autorun": "autorun"
+                "upload": "upload"
             },
             "properties": {
                 "EditableOptions": "False"
             }
         },
         {
-            "name": "targetArtifact",
-            "type": "picklist",
-            "label": "Target Artifact Name",
-            "required": true,
-            "defaultValue": "Build Pipeline",
-            "visibleRule": "(command == upload || command == autorun)",
-            "helpMarkDown": "Name of Target Artifact from which LHCI calculates build context. When executing task in build pipeline, leave default value. When in release, pick artifact from the dropdown.",
+            "name": "targetArtifactPath",
+            "type": "filePath",
+            "label": "Artifact to infer Build Context",
+            "required": false,
+            "helpMarkDown": "In a release pipeline, point to the root folder of the artifact which can be used to infer [build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context). If no value is specified, context is inferred from the primary artifact of the pipeline. <br/> In a build pipeline, the context is inferred from git repo and this field is ignored.",
             "properties": {
                 "EditableOptions": "True"
             }
@@ -46,25 +43,17 @@
         {
             "name": "configFilePath",
             "type": "filePath",
-            "label": "Path to Config File",
+            "label": "LHCI Configuration File",
             "required": false,
-            "helpMarkDown": "The path to the lighthouse CI configuration file."
+            "helpMarkDown": "The path to the lighthouse CI configuration file. Input to --config option of LHCI"
         },
         {
             "name": "parameters",
             "type": "multiLine",
-            "label": "CLI Parameters",
+            "label": "Additional CLI Options",
             "required": false,
             "helpMarkDown": "CLI options for Lighthouse CI."
         }
-    ],
-    "sourceDefinitions": [
-        {            
-            "target": "targetArtifact",            
-            "endpoint": "/$(system.teamProject)/_apis/release/releases/$(release.releaseId)?api-version=4.1-preview.6",
-            "selector": "jsonpath:$.artifacts[*].alias",
-            "authKey": "tfs:teamfoundation"
-        }  
     ],
     "execution": {
         "Node": {
