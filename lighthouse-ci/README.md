@@ -36,5 +36,5 @@ Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/az
 
 ## Contact
 
-- For issues, bugs, and feature requests, please [raise an issue](https://github.com/GuruCharan94/azure-devops-extensions/issues/new).
-- You should also join us in the [Azure DevOps Slack Channel](http://www.azuredevops.club/).
+- For issues, bugs, and feature requests, please [raise an issue](https://github.com/GuruCharan94/azure-devops-extensions/issues/new)
+- You should also join us in the [Azure DevOps Slack Channel](http://www.azuredevops.club/)
