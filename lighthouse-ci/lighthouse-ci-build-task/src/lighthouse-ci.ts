@@ -63,7 +63,7 @@ export class lighthouseCI {
             tasklib.debug('---------------------------Build Context Successfully Set-Up----------------------------- ');
         }
         else {
-            tasklib.debug('------------ Build Context already set up in a previous LightHouse CI task ---------------')
+            tasklib.debug('------------ Build Context already inferred from a previous LightHouse CI task ---------------')
         }
         return true;
     }
