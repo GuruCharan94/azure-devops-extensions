@@ -33,10 +33,9 @@
         {
             "name": "targetArtifactPath",
             "type": "filePath",
-            "label": "Target Artifact Name",
-            "visibleRule": "command == healthcheck",
+            "label": "Artifact to infer Build Context",
             "required": false,
-            "helpMarkDown": "Inside a release pipeline, point to the root of the target artifact from where to pick metadata to populate [build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context). Uses primary artifact of the pipeline by default. Inside a build pipeline, the metadata is inferred from git repo and this field is ignored.",
+            "helpMarkDown": "In a release pipeline, point to the root folder of the artifact which can be used to infer [build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context). If no value is specified, context is inferred from the primary artifact of the pipeline. In a build pipeline, the context is inferred from git repo and this field is ignored.",
             "properties": {
                 "EditableOptions": "True"
             }
@@ -51,7 +50,7 @@
         {
             "name": "parameters",
             "type": "multiLine",
-            "label": "CLI Parameters",
+            "label": "CLI Options",
             "required": false,
             "helpMarkDown": "CLI options for Lighthouse CI."
         }

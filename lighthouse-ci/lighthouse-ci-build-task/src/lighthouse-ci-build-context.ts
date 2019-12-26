@@ -6,7 +6,7 @@ import * as fs from "fs";
 import * as os from "os";
 import { throws } from 'assert';
 
-export class BuildContext {
+export class LightHouseCIBuildContext {
 
     private LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG: string = '';
     private LHCI_BUILD_CONTEXT__CURRENT_HASH: string = '';
@@ -20,15 +20,13 @@ export class BuildContext {
 
         if (tasklib.getVariable('RELEASE_RELEASEID')) {
 
-            tasklib.debug('Running Inside a Release Pipeline. Infer Build Context from Chosen Artifact');
+            tasklib.debug('Running Inside a Release Pipeline. Will infer Build Context from Artifact');
             this.inferBuildContextFromRelease(targetArtifactPath);
         }
         else {
-            tasklib.debug('Running Inside a Build Pipeline. Infer Build Context from Git Repo');
+            tasklib.debug('Running Inside a Build Pipeline. Will infer Build Context from Git Repo');
             this.inferBuildContextFromBuild();
         }
-
-        this.setBuildContextAsVariable();
     }
 
     private  inferBuildContextFromBuild() {
@@ -43,9 +41,13 @@ export class BuildContext {
 
         if (!targetArtifactPath) {
             artifactAlias = tasklib.getVariable('RELEASE_PRIMARYARTIFACTSOURCEALIAS').toUpperCase();
+
+            tasklib.debug(`Artifact path not provided. Using primary artifact ${artifactAlias} to populate build context.`);
         }
         else {
             artifactAlias = path.basename(targetArtifactPath).toUpperCase();
+            tasklib.debug(`Using artifact ${artifactAlias} to populate build context.`);
+
         }
 
         this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`);
@@ -57,17 +59,13 @@ export class BuildContext {
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = tasklib.getVariable('RELEASE_RELEASEWEBURL');
     }
 
-    private setBuildContextAsVariable()
-    {
-        tasklib.debug('------------------ Build Context-------------------');
+    public setBuildContext()
+    {        
         for (var key of Object.keys(this)) {
 
             if (key.startsWith('LHCI_BUILD_CONTEXT') && this[key]) {
-                
-                tasklib.debug(key + " -> " + this[key]);
                 tasklib.setVariable(key, this[key], false);
             }
         }
-        tasklib.debug('------------------ Build Context-------------------');
     }
 }

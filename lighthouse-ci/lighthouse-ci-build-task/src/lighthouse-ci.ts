@@ -5,24 +5,8 @@ import url = require('url');
 import * as fs from "fs";
 import * as os from "os";
 import { throws } from 'assert';
-import { BuildContext } from './lighthouse-ci-build-context';
+import { LightHouseCIBuildContext } from './lighthouse-ci-build-context';
 var uuidV4 = require('uuid/v4');
-
-class Settings {
-
-    public IsBuildContextApplied: boolean = tasklib.getVariable('LHCI_BuildContextApplied') ? true : false;
-    public LightHouseWorkingDirectory: string = tasklib.getVariable('LHCI_WorkingDirectory');
-
-    public ApplyBuildContext() {
-        this.IsBuildContextApplied = true;
-        tasklib.setVariable("LHCI_BuildContextApplied", "TRUE", false); // Set Variable
-    }
-
-    public SetLightHouseWorkingDirectory(path: string) {
-        this.LightHouseWorkingDirectory = path;
-        tasklib.setVariable("LHCI_WorkingDirectory", path, false);
-    }
-}
 
 export class lighthouseCI {
 
@@ -42,42 +26,58 @@ export class lighthouseCI {
 
         this.targetArtifact = tasklib.filePathSupplied('targetArtifactPath') ?
             `${tasklib.getPathInput('targetArtifactPath', false, true)}` : "";
-
-        // This field is only populated when command type = healthcheck.
     }
 
     public async run() {
 
         try {
 
-            this.Init();
+            if (await this.installLightHouse() && await this.setBuildContext()) {
 
-            let lighthouse = tasklib.tool('lhci');
-            lighthouse
-                .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
-                .exec()
-                .then(() => {
-                },
-                    (error) => {
-                        tasklib.setResult(tasklib.TaskResult.Failed, error);
-                    }
-                )
+                let lighthouse = tasklib.tool('lhci');
+                lighthouse
+                    .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
+                    .exec(<toolrunner.IExecOptions>{ cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
+                    .then(() => {
+                    },
+                        (error) => {
+                            tasklib.setResult(tasklib.TaskResult.Failed, error);
+                        }
+                    )
+            }
         }
         catch (error) {
             tasklib.setResult(tasklib.TaskResult.Failed, error.message);
         }
     }
 
-    private async Init() {
+    private async setBuildContext(): Promise<boolean> {
 
-        if(!tasklib.which('lhci', false)){
+        if (!tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH')) {
 
-            tasklib.debug('Lighthouse CI not found. Installing NPM Package..')
+            tasklib.debug('--------------------------- Setting Up Build Context for LightHouse CI--------------------------------')
+
+            let LHCIbuildContext = new LightHouseCIBuildContext(this.targetArtifact);
+            LHCIbuildContext.setBuildContext();
+
+            tasklib.debug('---------------------------Build Context Successfully Set-Up----------------------------- ');
+        }
+        else {
+            tasklib.debug('------------ Build Context already set up in a previous LightHouse CI task ---------------')
+        }
+        return true;
+    }
+
+    private async installLightHouse(): Promise<boolean> {
+        let lhci:string = tasklib.which('lhci', false);
+        if (!lhci) {
+
+            tasklib.debug('-------------------------Lighthouse CI not found. Installing NPM Package --------------------------------')
 
             let tempDirectory = tasklib.getVariable('agent.tempDirectory');
             tasklib.checkPath(tempDirectory, `${tempDirectory} (agent.tempDirectory)`);
             let filePath = path.join(tempDirectory, uuidV4() + '.sh');
-            
+
             if (os.platform() === "win32") {
                 fs.writeFileSync(filePath, 'export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm install -g @lhci/cli puppeteer', { encoding: 'utf8' });
             }
@@ -85,40 +85,24 @@ export class lighthouseCI {
                 fs.writeFileSync(filePath, 'sudo PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install -g @lhci/cli puppeteer', { encoding: 'utf8' });
             }
 
-            tasklib.tool(tasklib.which('bash', true))
-                    .arg('--noprofile')
-                    .arg(`--norc`)
-                    .arg(filePath)
-                    .execSync();
+            var lighthouseInstallResult = await tasklib.tool(tasklib.which('bash', true))
+                .arg('--noprofile')
+                .arg(`--norc`)
+                .arg(filePath)
+                .exec();
 
-            tasklib.debug('Installed..')
-        }
-        
-        let settings = new Settings();
-
-        if (!settings.IsBuildContextApplied) {
-            if (this.command != "healthcheck") {
-
-                tasklib.error('You have to first run Lighthouse CI health check and then run with other commands')
-
-            }
-            tasklib.debug('Setting Up Build Context for LHCI..')
-            new BuildContext(this.targetArtifact);
-            settings.ApplyBuildContext();
-            tasklib.debug('Done..');
-
-        }
-        if (!settings.LightHouseWorkingDirectory) {
-            tasklib.debug('Setting Working Directory..');
-            if (this.configFilePath) {
-                settings.SetLightHouseWorkingDirectory(path.dirname(tasklib.getPathInput('configFilePath')));
+            if (lighthouseInstallResult !== 0) {
+                throw 'Failed to install Lighthouse CI and Puppeteer.';
             }
             else {
-                settings.SetLightHouseWorkingDirectory(tasklib.cwd());
+                tasklib.debug('------------------------------------ Successfully Installed Lighthouse CI and Puppeteer -----------------------------');
+                return true;
             }
         }
-        tasklib.cd(settings.LightHouseWorkingDirectory);
-        tasklib.debug(`Working Dir Set to ${settings.LightHouseWorkingDirectory}`);
+        else {
+            tasklib.debug(`LightHouse CI installation found at ${lhci}.`);
+        }
+        return true;
     }
 }
 
