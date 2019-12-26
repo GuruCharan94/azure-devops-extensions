@@ -14,18 +14,15 @@ Once the extension is installed, you will see Lighthouse CI task that you can us
 
 The `command`, `Configuration File` and `CLI options` are fairly straight forward configurations and map directly to options you would pass to LHCI in the command line.
 
-### Artifact to Infer Build Context From
+The input to `Artifact to Infer Build Context` is used by the task to override [Lighthouse CI's build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context).
 
-When uploading to the Lighthouse CI server, the CLI will attempt to [automatically infer the build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context).
+- When running the tasks **inside a release pipeline**, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact.
 
-When running the tasks inside a build pipeline, most of the context is inferred from the Git Repo. **Any value passed to the `Artifact to infer build context from` input is ignored inside build pipelines.**
+- When running the tasks inside a build pipeline, the context is inferred from the Git Repo. **Any value passed to this input is ignored inside build pipelines.**
 
-When running the tasks **inside a release pipeline**, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, **specify the path to the *root folder* of the chosen artifact**.
+The extension overrides the build context using predefined variables from Azure Devops as shown in the table below.
 
-The extension overrides some bits of the build context using predefined variables from Azure Devops.
-
-[Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml)
-[Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
+Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) and [Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
 
 | Name                                     | Build Pipeline                                  | Release Pipeline
 | ---------------------------------------- | ----------------------------------------------- |-----------------------------------
