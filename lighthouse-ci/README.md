@@ -20,9 +20,7 @@ The input to `Artifact to Infer Build Context` is used by the task to override [
   - Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from.
   - If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact.
 
-The extension overrides the build context using predefined variables from Azure Devops as shown in the table below.
-
-Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) and [Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
+The build context is set using the help of predefined variables from Azure Devops as shown in the table below. Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) and [Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
 
 | Name                                     | Build Pipeline                                  | Release Pipeline
 | ---------------------------------------- | ----------------------------------------------- |-----------------------------------
