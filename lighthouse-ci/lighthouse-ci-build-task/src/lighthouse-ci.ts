@@ -37,7 +37,7 @@ export class lighthouseCI {
                 let lighthouse = tasklib.tool('lhci');
                 lighthouse
                     .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
-                    .exec(<toolrunner.IExecOptions>{ cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
+                    .exec(<toolrunner.IExecOptions>{ failOnStdErr: this.command == 'autorun', cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
                     .then(() => {
                     },
                         (error) => {
@@ -53,18 +53,13 @@ export class lighthouseCI {
 
     private async setBuildContext(): Promise<boolean> {
 
-        if (!tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH')) {
+        if (this.command == 'autorun' || this.command == 'upload' || this.command == 'healthcheck') {
 
             tasklib.debug('--------------------------- Setting Up Build Context for LightHouse CI--------------------------------')
-
             let LHCIbuildContext = new LightHouseCIBuildContext(this.targetArtifact);
             LHCIbuildContext.setBuildContext();
-
             tasklib.debug('---------------------------Build Context Successfully Set-Up----------------------------- ');
-        }
-        else {
-            tasklib.debug('------------ Build Context already inferred from a previous LightHouse CI task ---------------')
-        }
+        }        
         return true;
     }
 
