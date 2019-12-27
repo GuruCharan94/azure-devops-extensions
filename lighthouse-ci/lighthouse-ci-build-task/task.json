@@ -24,7 +24,8 @@
                 "healthcheck": "healthcheck",
                 "collect" : "collect",
                 "assert": "assert",
-                "upload": "upload"
+                "upload": "upload",
+                "autorun": "autorun"
             },
             "properties": {
                 "EditableOptions": "False"
