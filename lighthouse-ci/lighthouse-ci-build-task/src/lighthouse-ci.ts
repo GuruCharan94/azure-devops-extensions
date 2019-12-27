@@ -37,7 +37,7 @@ export class lighthouseCI {
                 let lighthouse = tasklib.tool('lhci');
                 lighthouse
                     .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
-                    .exec(<toolrunner.IExecOptions>{ failOnStdErr: true, cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
+                    .exec(<toolrunner.IExecOptions>{ failOnStdErr: this.command == 'autorun', cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
                     .then(() => {
                     },
                         (error) => {
