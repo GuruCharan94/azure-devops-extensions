@@ -1,8 +1,12 @@
 # Lighthouse CI
 
 [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) is a set of commands that make continuously running, asserting, saving, and retrieving [Lighthouse](https://github.com/GoogleChrome/lighthouse) results as easy as possible.
-
 This extension runs Lighthouse CI as part of your Azure Pipelines.
+
+Read these blog posts for a quick overview of how Lighthouse CI works
+
+- [Getting Started with Lighthouse CI - Part 1](https://www.gurucharan.in/web/nodejs/lighthouse-ci-the-complete-guide-part-1/)
+- [Getting Started with Lighthouse CI - Part 2](https://www.gurucharan.in/web/nodejs/lighthouse-ci-the-complete-guide-part-2/)
 
 ## Getting Started with Lighthouse CI for Azure Devops
 
@@ -10,15 +14,21 @@ Once the extension is installed, you will see Lighthouse CI task that you can us
 
 ![Lighthouse CI Sample Pipeline](https://raw.githubusercontent.com/GuruCharan94/azure-devops-extensions/master/lighthouse-ci/images/demo-pipeline.png)
 
-The `Command`, `Configuration File` and `CLI options` are fairly straight forward configurations and map directly to options you would pass to LHCI in the command line.
+## Inputs
 
-The input to `Artifact to Infer Build Context` is used by the task to override [Lighthouse CI's build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context) for `autorun` and `upload` options. You can pretty much leave this blank for other options.
+- Command - Dropdown where you choose one of Collect, Assert, Autorun or Upload.
 
-- When running the tasks inside a build pipeline, the context is inferred from the Git Repo. **Any value passed to this input is ignored inside build pipelines.**
+- Configuration File - Path to the Lighthouse CI configuration file.
+  
+- CLI options - Command Line Arguments used to override options in configuration file.
 
-- When running the tasks **inside a release pipeline**, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from.
-  - Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from.
-  - If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact.
+- Artifact to Infer Build Context - Used by the task to override [Lighthouse CI's build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context) for `autorun` and `upload` options. You can pretty much leave this blank for other options.
+
+  - **Build Pipelines** - When running the tasks inside a build pipeline, the context is inferred from the Git Repo. Any value passed to this input is *ignored inside build pipelines*.
+
+  - **Release Pipeline** - When running the tasks *inside a release pipeline*, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact. It usually looks like `$(System.DefaultWorkingDirectory)/_my_artifact)`.
+
+## Build Context Override Process
 
 The build context is set using the help of predefined variables from Azure Devops as shown in the table below. Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) and [Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
 
