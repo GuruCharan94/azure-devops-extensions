@@ -26,7 +26,7 @@ Once the extension is installed, you will see Lighthouse CI task that you can us
 
   - **Build Pipelines** - When running the tasks inside a build pipeline, the context is inferred from the Git Repo. Any value passed to this input is *ignored inside build pipelines*.
 
-  - **Release Pipeline** - When running the tasks *inside a release pipeline*, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact.
+  - **Release Pipeline** - When running the tasks *inside a release pipeline*, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact. It usually looks like `$(System.DefaultWorkingDirectory)/_my_artifact)`.
 
 ## Build Context Override Process
 
