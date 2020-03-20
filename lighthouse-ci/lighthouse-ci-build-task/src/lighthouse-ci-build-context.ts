@@ -12,7 +12,7 @@ export class LightHouseCIBuildContext {
     private LHCI_BUILD_CONTEXT__CURRENT_HASH: string = '';
     private LHCI_BUILD_CONTEXT__COMMIT_TIME: string = '';
     private LHCI_BUILD_CONTEXT__COMMIT_MESSAGE: string = '';
-    private LHCI_BUILD_CONTEXT__CURRENT_BRANCH: string = '';
+    private LHCI_BUILD_CONTEXT__CURRENT_BRANCH: string = ''; 
     private LHCI_BUILD_CONTEXT__AUTHOR: string = '';
     private LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL: string = '';
 
@@ -30,9 +30,9 @@ export class LightHouseCIBuildContext {
     }
 
     private  inferBuildContextFromBuild() {
-        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('BUILD_REPOSITORY_NAME');
+        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG') || tasklib.getVariable('BUILD_REPOSITORY_NAME');
+        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH') || tasklib.getVariable('BUILD_SOURCEBRANCHNAME');
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}`;
-        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('BUILD_SOURCEBRANCHNAME');
         // other variables are inferred from git by LHCI.
     }
 
@@ -50,12 +50,13 @@ export class LightHouseCIBuildContext {
 
         }
 
-        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`);
+        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG') || tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`);
+        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH') || tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`);
+        
+        this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('RELEASE_RELEASENAME');
         this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`);
         this.LHCI_BUILD_CONTEXT__COMMIT_TIME = tasklib.getVariable(`RELEASE_DEPLOYMENT_STARTTIME`);
         this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = `${tasklib.getVariable('RELEASE_DEFINITIONNAME')} - ${tasklib.getVariable('RELEASE_RELEASENAME')} - ${tasklib.getVariable('RELEASE_ENVIRONMENTNAME')}`;
-        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable(`RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`);
-        this.LHCI_BUILD_CONTEXT__AUTHOR = `${tasklib.getVariable('RELEASE_RELEASENAME')}`;
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = tasklib.getVariable('RELEASE_RELEASEWEBURL');
     }
 
