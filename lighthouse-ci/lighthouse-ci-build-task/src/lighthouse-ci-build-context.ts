@@ -65,7 +65,9 @@ export class LightHouseCIBuildContext {
         for (var key of Object.keys(this)) {
 
             if (key.startsWith('LHCI_BUILD_CONTEXT') && this[key]) {
-                tasklib.setVariable(key, this[key], false);
+                if (!tasklib.getVariable(key)) {
+                    tasklib.setVariable(key, this[key], false);
+                }
             }
         }
     }
