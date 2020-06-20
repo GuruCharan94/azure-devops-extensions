@@ -18,14 +18,14 @@ export class LightHouseCIBuildContext {
 
     constructor(targetArtifactPath: string) {
 
-        if (tasklib.getVariable('RELEASE_RELEASEID')) {
+        if (tasklib.getVariable('BUILD_BUILDID')) {
 
-            tasklib.debug('Running Inside a Release Pipeline. Will infer Build Context from Artifact');
-            this.inferBuildContextFromRelease(targetArtifactPath);
+            tasklib.debug('Running Inside a Build Pipeline or YAML multi-stage pipeline. Will infer Build Context from Git Repo');
+            this.inferBuildContextFromBuild();
         }
         else {
-            tasklib.debug('Running Inside a Build Pipeline. Will infer Build Context from Git Repo');
-            this.inferBuildContextFromBuild();
+            tasklib.debug('Running Inside a Release Pipeline. Will infer Build Context from Artifact');
+            this.inferBuildContextFromRelease(targetArtifactPath);
         }
     }
 
