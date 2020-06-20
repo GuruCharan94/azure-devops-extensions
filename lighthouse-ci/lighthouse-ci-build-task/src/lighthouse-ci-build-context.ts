@@ -18,12 +18,12 @@ export class LightHouseCIBuildContext {
 
     constructor(targetArtifactPath: string) {
 
-        if (tasklib.getVariable('BUILD_BUILDID')) {
-                this.inferBuildContextFromBuild();
-        }
-        else {
+        if (tasklib.getVariable('RELEASE_RELEASEID')) {
             tasklib.debug('Running Inside the classic Release Pipeline');
             this.inferBuildContextFromRelease(targetArtifactPath);
+        }
+        else {
+            this.inferBuildContextFromBuild();
         }
     }
 
