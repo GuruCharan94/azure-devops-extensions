@@ -19,12 +19,10 @@ export class LightHouseCIBuildContext {
     constructor(targetArtifactPath: string) {
 
         if (tasklib.getVariable('BUILD_BUILDID')) {
-
-            tasklib.debug('Running Inside a Build Pipeline or YAML multi-stage pipeline. Will infer Build Context from Git Repo');
-            this.inferBuildContextFromBuild();
+                this.inferBuildContextFromBuild();
         }
         else {
-            tasklib.debug('Running Inside a Release Pipeline. Will infer Build Context from Artifact');
+            tasklib.debug('Running Inside the classic Release Pipeline');
             this.inferBuildContextFromRelease(targetArtifactPath);
         }
     }
@@ -34,13 +32,10 @@ export class LightHouseCIBuildContext {
         this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH') || tasklib.getVariable('BUILD_SOURCEBRANCHNAME');
         this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}`;
 
-        if (tasklib.getVariable('PIPELINE_WORKSPACE')) {
-            this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = tasklib.getVariable('BUILD_BUILDNUMBER');
-            this.LHCI_BUILD_CONTEXT__COMMIT_TIME = new Date().toISOString();
-            this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('BUILD_BUILDNUMBER');
-            this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable('BUILD_SOURCEVERSION');
-        }
-        // other variables are inferred from git by LHCI.
+        this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = tasklib.getVariable('BUILD_BUILDNUMBER');
+        this.LHCI_BUILD_CONTEXT__COMMIT_TIME = new Date().toISOString();
+        this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('BUILD_BUILDNUMBER');
+        this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable('BUILD_SOURCEVERSION');
     }
 
     private inferBuildContextFromRelease(targetArtifactPath: string) {
