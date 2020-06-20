@@ -35,11 +35,11 @@ The build context is set using the help of predefined variables from Azure Devop
 | Name                                     | Build Pipeline                                  | Release Pipeline
 | ---------------------------------------- | ----------------------------------------------- |-----------------------------------
 | `LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG`   | `BUILD_REPOSITORY_NAME`                         | `RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`
-| `LHCI_BUILD_CONTEXT__CURRENT_HASH`       | Inferred from Git                               | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`
-| `LHCI_BUILD_CONTEXT__COMMIT_TIME`        | Inferred from Git                               | `RELEASE_DEPLOYMENT_STARTTIME`
+| `LHCI_BUILD_CONTEXT__CURRENT_HASH`       | `BUILD_SOURCEVERSION`                           | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`
+| `LHCI_BUILD_CONTEXT__COMMIT_TIME`        | `new Date().toISOString()`                      | `RELEASE_DEPLOYMENT_STARTTIME`
 | `LHCI_BUILD_CONTEXT__CURRENT_BRANCH`     | `BUILD_SOURCEBRANCHNAME`                        | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`
-| `LHCI_BUILD_CONTEXT__COMMIT_MESSAGE`     | Inferred from Git                               | `RELEASE_DEFINITIONNAME` - `RELEASE_RELEASENAME` - `RELEASE_ENVIRONMENTNAME`
-| `LHCI_BUILD_CONTEXT__AUTHOR`             | Inferred from Git                               | `RELEASE_RELEASENAME`
+| `LHCI_BUILD_CONTEXT__COMMIT_MESSAGE`     | `BUILD_BUILDNUMBER`                             | `RELEASE_DEFINITIONNAME` - `RELEASE_RELEASENAME` - `RELEASE_ENVIRONMENTNAME`
+| `LHCI_BUILD_CONTEXT__AUTHOR`             | `BUILD_BUILDNUMBER`                             | `RELEASE_RELEASENAME`
 | `LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL` | Link to the Executing Build `BUILD_BUILDID`     | `RELEASE_RELEASEWEBURL`
 
 You can also override the following settings in the build context using variables of the same name in your Build / Release pipeline.
