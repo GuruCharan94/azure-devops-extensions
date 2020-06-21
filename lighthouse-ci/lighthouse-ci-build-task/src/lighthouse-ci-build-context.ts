@@ -36,6 +36,7 @@ export class LightHouseCIBuildContext {
         this.LHCI_BUILD_CONTEXT__COMMIT_TIME = new Date().toISOString();
         this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('BUILD_BUILDNUMBER');
         this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable('BUILD_SOURCEVERSION');
+        
     }
 
     private inferBuildContextFromRelease(targetArtifactPath: string) {

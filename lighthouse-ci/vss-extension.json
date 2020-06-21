@@ -13,7 +13,7 @@
         "vso.build",
         "vso.release"
     ],
-    "description": "Lighthouse CI Extension for Azure Devops",
+    "description": "Lighthouse CI Extension for Azure Devops that can run lighthouse tests, assert and save your results.",
     "categories": [
         "Azure Pipelines"
     ],

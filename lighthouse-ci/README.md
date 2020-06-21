@@ -22,30 +22,30 @@ Once the extension is installed, you will see Lighthouse CI task that you can us
   
 - CLI options - Command Line Arguments used to override options in configuration file.
 
-- Artifact to Infer Build Context - Used by the task to override [Lighthouse CI's build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context) for `autorun` and `upload` options. You can pretty much leave this blank for other options.
+- Artifact to Infer Build Context - Used by the task to override [Lighthouse CI's build context](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/cli.md#build-context) for `autorun` and `upload` commands. You can pretty much leave this blank for other commands.
 
-  - **Build Pipelines** - When running the tasks inside a build pipeline, the context is inferred from the Git Repo. Any value passed to this input is *ignored inside build pipelines*.
+  - **Build / YAML Multi-stage Pipelines** - When running the tasks inside mutli stage pipeline, the context is inferred from the Predefined variables listed in table below. Any value passed to this input is **ignored inside build pipelines**.
 
-  - **Release Pipeline** - When running the tasks *inside a release pipeline*, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact. It usually looks like `$(System.DefaultWorkingDirectory)/_my_artifact)`.
+  - **Classic Release Pipeline** - When running the tasks *inside a release pipeline*, inferring context get slightly tricky. A release can have multiple artifacts of different types and so you have the option of choosing which artifact you would like to infer build context from. Leaving this blank will lead to the primary artifact of the pipeline being chosen as the one from which to infer build context from. If you want to point to a different artifact for this purpose, specify the **path to the root folder** of the chosen artifact. It usually looks like `$(System.DefaultWorkingDirectory)/_my_artifact)`.
 
 ## Build Context Override
 
 The build context is set using the help of predefined variables from Azure Devops as shown in the table below. Take a look at pre defined [Build Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) and [Release Variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables?view=azure-devops&tabs=batch)
 
-| Name                                     | Build Pipeline                                  | Release Pipeline
-| ---------------------------------------- | ----------------------------------------------- |-----------------------------------
-| `LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG`   | `BUILD_REPOSITORY_NAME`                         | `RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`
-| `LHCI_BUILD_CONTEXT__CURRENT_HASH`       | `BUILD_SOURCEVERSION`                           | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`
-| `LHCI_BUILD_CONTEXT__COMMIT_TIME`        | `new Date().toISOString()`                      | `RELEASE_DEPLOYMENT_STARTTIME`
-| `LHCI_BUILD_CONTEXT__CURRENT_BRANCH`     | `BUILD_SOURCEBRANCHNAME`                        | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`
-| `LHCI_BUILD_CONTEXT__COMMIT_MESSAGE`     | `BUILD_BUILDNUMBER`                             | `RELEASE_DEFINITIONNAME` - `RELEASE_RELEASENAME` - `RELEASE_ENVIRONMENTNAME`
-| `LHCI_BUILD_CONTEXT__AUTHOR`             | `BUILD_BUILDNUMBER`                             | `RELEASE_RELEASENAME`
-| `LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL` | Link to the Executing Build `BUILD_BUILDID`     | `RELEASE_RELEASEWEBURL`
+| Name                                     | Build / YAML MultiStage Pipeline             | Release Pipeline
+| ---------------------------------------- | ---------------------------------------------| -----------------------------------
+| `LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG`   | `BUILD_REPOSITORY_NAME`                      | `RELEASE_ARTIFACTS_${artifactAlias}_REPOSITORY_NAME`
+| `LHCI_BUILD_CONTEXT__CURRENT_HASH`       | `BUILD_SOURCEVERSION`                        | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEVERSION`
+| `LHCI_BUILD_CONTEXT__COMMIT_TIME`        | `new Date().toISOString()`                   | `RELEASE_DEPLOYMENT_STARTTIME`
+| `LHCI_BUILD_CONTEXT__CURRENT_BRANCH`     | `BUILD_SOURCEBRANCHNAME`                     | `RELEASE_ARTIFACTS_${artifactAlias}_SOURCEBRANCH`
+| `LHCI_BUILD_CONTEXT__COMMIT_MESSAGE`     | `BUILD_BUILDNUMBER`                          | `RELEASE_DEFINITIONNAME` - `RELEASE_RELEASENAME` - `RELEASE_ENVIRONMENTNAME`
+| `LHCI_BUILD_CONTEXT__AUTHOR`             | `BUILD_BUILDNUMBER`                          | `RELEASE_RELEASENAME`
+| `LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL` | Link to the Executing Build `BUILD_BUILDID`  | `RELEASE_RELEASEWEBURL`
 
-You can also override the following settings in the build context using variables of the same name in your Build / Release pipeline.
+You can also override the below settings in the build context using variables of the same name in your Build / Release pipeline.
 
-LHCI_BUILD_CONTEXT__CURRENT_BRANCH
-LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG
+`LHCI_BUILD_CONTEXT__CURRENT_BRANCH`
+`LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG`
 
 ## Contact
 
