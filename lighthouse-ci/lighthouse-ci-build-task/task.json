@@ -61,7 +61,7 @@
             "label": "Fail on Standard Error",
             "defaultValue": "true",
             "required": false,
-            "helpMarkDown": "If this is true, this task will fail if any errors are written to the StandardError stream."
+            "helpMarkDown": "If this is checked, this task will fail if any errors are written to the StandardError stream. This setting is only considered for autorun command. It is ignored for other commands."
         }
     ],
     "execution": {
