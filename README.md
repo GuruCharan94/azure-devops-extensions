@@ -15,3 +15,4 @@ Each of the extensions may be subject to different Licensing terms. Please refer
 ## Getting Started
 
 - [Lighthouse Extension](./lighthouse/README.md)
+- [Lighthouse CI Extension](./lighthouse-ci/README.md)
