@@ -61,8 +61,7 @@
             "label": "Fail on Standard Error",
             "defaultValue": "true",
             "required": false,
-            "helpMarkDown": "If this is true, this task will fail if any errors are written to the StandardError stream.",
-            "groupName": "advanced"
+            "helpMarkDown": "If this is true, this task will fail if any errors are written to the StandardError stream."
         }
     ],
     "execution": {
