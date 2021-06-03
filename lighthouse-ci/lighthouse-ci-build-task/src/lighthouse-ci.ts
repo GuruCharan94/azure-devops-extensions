@@ -25,7 +25,7 @@ export class lighthouseCI {
 
         this.parameters = tasklib.getInput('parameters', false) || "";
 
-        this.failOnStderr = tasklib.getBoolInput('failOnStderr',false) || true;
+        this.failOnStderr = tasklib.getBoolInput('failOnStderr',false) || false;
 
         this.targetArtifact = tasklib.filePathSupplied('targetArtifactPath') ?
             `${tasklib.getPathInput('targetArtifactPath', false, true)}` : "";
@@ -40,7 +40,10 @@ export class lighthouseCI {
                 let lighthouse = tasklib.tool('lhci');
                 lighthouse
                     .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
-                    .exec(<toolrunner.IExecOptions>{ failOnStdErr: (this.command == 'autorun' && this.failOnStderr), cwd: path.dirname(tasklib.getPathInput('configFilePath')) })
+                    .exec(<toolrunner.IExecOptions>{ 
+                        failOnStdErr: this.failOnStderr, 
+                        cwd: path.dirname(tasklib.getPathInput('configFilePath'))
+                     })
                     .then(() => {
                     },
                         (error) => {
