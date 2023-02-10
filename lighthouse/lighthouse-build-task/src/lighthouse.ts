@@ -55,5 +55,4 @@ async function run() {
         tasklib.setResult(tasklib.TaskResult.Failed, error.message);
     }
 }
-
 run();
