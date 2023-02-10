@@ -1,5 +1,6 @@
 {
     "id": "81cc77f6-237b-4962-a25e-80f820a88462",
+    "minimumAgentVersion": "2.144.0",
     "name": "googlelighthouse",
     "friendlyName": "Google LightHouse Scan",
     "description": "Runs Google Lighthouse scan against target URL.",
@@ -36,7 +37,7 @@
         }
     ],
     "execution": {
-        "Node": {
+        "Node16": {
             "target": "src/lighthouse.js"
         }
     }

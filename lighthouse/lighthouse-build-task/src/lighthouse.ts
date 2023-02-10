@@ -10,7 +10,7 @@ async function run() {
     try {
 
         // Read Inputs to Task
-        let targetURL: string = tasklib.getInput('targetURL', true);
+        let targetURL: string = tasklib.getInput('targetURL', true) || '';
         let configFilePath: string = tasklib.filePathSupplied('configFilePath') ? 
                                         `--config-path ${tasklib.getPathInput('configFilePath', false, true)}` : "" ;
         let parameters: string = tasklib.getInput('parameters', false) || "";        
@@ -51,9 +51,8 @@ async function run() {
                 }
                 )
     }
-    catch (error) {
+    catch (error : any) {
         tasklib.setResult(tasklib.TaskResult.Failed, error.message);
     }
 }
-
 run();

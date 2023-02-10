@@ -9,11 +9,11 @@
   "author": "Gurucharan94",
   "license": "MIT",
   "dependencies": {
-    "azure-pipelines-task-lib": "2.8.0",
+    "azure-pipelines-task-lib": "^4.1.0",
     "lighthouse": "^5.6.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.2",
+    "@types/node": "^16.11.39",
     "@types/q": "^1.5.2"
   }
 }
