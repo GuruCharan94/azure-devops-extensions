@@ -28,14 +28,14 @@ export class LightHouseCIBuildContext {
     }
 
     private inferBuildContextFromBuild() {
-        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG') || tasklib.getVariable('BUILD_REPOSITORY_NAME');
-        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH') || tasklib.getVariable('BUILD_SOURCEBRANCHNAME');
-        this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}`;
+        this.LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG = tasklib.getVariable('LHCI_BUILD_CONTEXT__GITHUB_REPO_SLUG') || tasklib.getVariable('BUILD_REPOSITORY_NAME') || '';
+        this.LHCI_BUILD_CONTEXT__CURRENT_BRANCH = tasklib.getVariable('LHCI_BUILD_CONTEXT__CURRENT_BRANCH') || tasklib.getVariable('BUILD_SOURCEBRANCHNAME') || '';
+        this.LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL = `${tasklib.getVariable('SYSTEM_COLLECTIONURI')}${tasklib.getVariable('SYSTEM_TEAMPROJECT')}/_build/results?buildId=${tasklib.getVariable('BUILD_BUILDID')}` || '';
 
-        this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = tasklib.getVariable('BUILD_BUILDNUMBER');
-        this.LHCI_BUILD_CONTEXT__COMMIT_TIME = new Date().toISOString();
-        this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('BUILD_BUILDNUMBER');
-        this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable('BUILD_SOURCEVERSION');
+        this.LHCI_BUILD_CONTEXT__COMMIT_MESSAGE = tasklib.getVariable('BUILD_BUILDNUMBER') || '';
+        this.LHCI_BUILD_CONTEXT__COMMIT_TIME = new Date().toISOString() || '';
+        this.LHCI_BUILD_CONTEXT__AUTHOR = tasklib.getVariable('BUILD_BUILDNUMBER') || '';
+        this.LHCI_BUILD_CONTEXT__CURRENT_HASH = tasklib.getVariable('BUILD_SOURCEVERSION') || '';
         
     }
 
