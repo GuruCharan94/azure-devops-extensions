@@ -18,7 +18,7 @@ export class lighthouseCI {
 
     constructor() {
 
-        this.command = tasklib.getInput('command');
+        this.command = tasklib.getInput('command') || '';
 
         this.configFilePath = tasklib.filePathSupplied('configFilePath') ?
             `--config ${tasklib.getPathInput('configFilePath', false, true)}` : "";
@@ -42,7 +42,7 @@ export class lighthouseCI {
                     .line(`${this.command} ${this.configFilePath} ${this.parameters}`)
                     .exec(<toolrunner.IExecOptions>{ 
                         failOnStdErr: this.failOnStderr, 
-                        cwd: path.dirname(tasklib.getPathInput('configFilePath'))
+                        cwd: path.dirname(tasklib.getPathInput('configFilePath') || '')
                      })
                     .then(() => {
                     },
@@ -52,7 +52,7 @@ export class lighthouseCI {
                     )
             }
         }
-        catch (error) {
+        catch (error : any) {
             tasklib.setResult(tasklib.TaskResult.Failed, error.message);
         }
     }
@@ -75,9 +75,9 @@ export class lighthouseCI {
 
             tasklib.debug('-------------------------Lighthouse CI not found. Installing NPM Package --------------------------------')
 
-            let tempDirectory = tasklib.getVariable('agent.tempDirectory');
+            let tempDirectory = tasklib.getVariable('agent.tempDirectory') || '';
             tasklib.checkPath(tempDirectory, `${tempDirectory} (agent.tempDirectory)`);
-            let filePath = path.join(tempDirectory, uuidV4() + '.sh');
+            let filePath = path.join(tempDirectory, uuidV4() + '.sh') || '';
 
             if (os.platform() === "win32") {
                 fs.writeFileSync(filePath, 'export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm install -g @lhci/cli puppeteer', { encoding: 'utf8' });

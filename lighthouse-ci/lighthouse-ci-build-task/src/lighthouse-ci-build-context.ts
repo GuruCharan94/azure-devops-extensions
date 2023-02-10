@@ -43,7 +43,7 @@ export class LightHouseCIBuildContext {
         let artifactAlias: string;
 
         if (!targetArtifactPath) {
-            artifactAlias = tasklib.getVariable('RELEASE_PRIMARYARTIFACTSOURCEALIAS')?.toUpperCase();
+            artifactAlias = tasklib.getVariable('RELEASE_PRIMARYARTIFACTSOURCEALIAS')?.toUpperCase() || '';
 
             tasklib.debug(`Artifact path not provided. Using primary artifact ${artifactAlias} to populate build context.`);
         }
