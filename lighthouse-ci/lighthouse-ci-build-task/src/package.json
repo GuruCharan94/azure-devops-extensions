@@ -9,10 +9,10 @@
     "author": "Gurucharan94",
     "license": "MIT",
     "dependencies": {
-        "azure-pipelines-task-lib": "2.8.0"
+        "azure-pipelines-task-lib": "^4.1.0"
     },
     "devDependencies": {
-        "@types/node": "^16.11.39"
+        "@types/node": "^16.11.39",
         "@types/q": "^1.5.2"
     }
 }

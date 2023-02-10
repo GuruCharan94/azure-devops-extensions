@@ -1,5 +1,6 @@
 {
     "id": "a7ea6fda-6f72-4e20-a1a7-4cd0bcbf7b61",
+    "minimumAgentVersion": "2.144.0",
     "name": "lighthouse-ci",
     "friendlyName": "Lighthouse CI Extension",
     "description": "Automate running Lighthouse for every commit, viewing the changes, and preventing regressions",
@@ -65,7 +66,7 @@
         }
     ],
     "execution": {
-        "Node": {
+        "Node16": {
             "target": "src/lighthouse-ci.js"
         }
     }
